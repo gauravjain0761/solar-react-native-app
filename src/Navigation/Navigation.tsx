@@ -7,9 +7,16 @@ import OtpScreen from '../Screens/OtpScreen';
 import SelectCity from '../Screens/SelectCity';
 import {BACK_ARROW} from '../Theme/Resources';
 import {AppStyles} from '../Theme/AppStyles';
-import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {color} from '../Theme/color';
-import {commonFontStyle} from '../Theme/Fonts';
+import {commonFontStyle, hp, wp} from '../Theme/Fonts';
 import CustomerDashboard from '../Screens/Customer/CustomerDashboard';
 import ChooseSignupScreen from '../Screens/ChooseSignupScreen';
 import CustomerSignupScreen from '../Screens/Customer/CustomerSignupScreen';
@@ -62,7 +69,37 @@ let DrawerItemArray = [
   {
     label: 'Dashboard',
     image: require('../assets/images/ic_home.png'),
-    screen: 'CompanyDashboard',
+    screen: 'CustomerDashboard',
+  },
+  {
+    label: 'Profile',
+    image: require('../assets/images/ic_user.png'),
+    screen: 'CustomerProfile',
+  },
+  {
+    label: 'My Coupons',
+    image: require('../assets/images/promocode.png'),
+    screen: 'MyCouponsScreen',
+  },
+  {
+    label: 'Contact Us',
+    image: require('../assets/images/contact-mail.png'),
+    screen: 'ContactUsScreen',
+  },
+  {
+    label: 'About Us',
+    image: require('../assets/images/about.png'),
+    screen: 'AboutUsScreen',
+  },
+  {
+    label: 'Help',
+    image: require('../assets/images/contactUs.png'),
+    screen: 'HelpScreen',
+  },
+  {
+    label: 'Rate & Review',
+    image: require('../assets/images/review.png'),
+    screen: 'RateReviewScreen',
   },
 ];
 function CustomDrawerContent(props) {
@@ -74,20 +111,38 @@ function CustomDrawerContent(props) {
         padding: 0,
       }}
       {...props}>
-      {DrawerItemArray.map((item, index) => {
-        return (
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginVertical: 12,
-              alignItems: 'center',
-            }}>
-            <Image style={[styles.drawerItemIcon]} source={item.image} />
-            <Text>{item.label}</Text>
-          </TouchableOpacity>
-        );
-      })}
+      <View
+        style={{
+          marginVertical: 12,
+          alignItems: 'center',
+        }}>
+        <Image
+          style={[styles.logoIcon]}
+          source={require('../assets/images/ic_sorConnect.png')}
+        />
+        <Text style={styles.userName}>{'Sor Coonect'}</Text>
+      </View>
+      <ScrollView style={{}}>
+        {DrawerItemArray.map((item, index) => {
+          return (
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate(item.screen)}
+              style={styles.drawerContent}>
+              <Image style={[styles.drawerItemIcon]} source={item.image} />
+              <Text style={styles.labelText}>{item.label}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+      <TouchableOpacity
+      onPress={() => props.navigation.navigate("LoginScreen")}
+       style={styles.drawerContent}>
+        <Image
+          style={[styles.drawerItemIcon]}
+          source={require('../assets/images/switch.png')}
+        />
+        <Text style={styles.labelText}>{'Logout'}</Text>
+      </TouchableOpacity>
     </DrawerContentScrollView>
   );
 }
@@ -130,7 +185,7 @@ const CustomerStackNavigator: FC = () => {
   return (
     <CustomerStack.Navigator
       initialRouteName="CompanyDashboard"
-      // drawerContent={props => <CustomDrawerContent {...props} />}
+      drawerContent={props => <CustomDrawerContent {...props} />}
       screenOptions={({navigation}) => ({
         drawerItemStyle: {
           borderRadius: 0,
@@ -291,8 +346,25 @@ const MainStackNavigator: FC = () => {
     <MainStack.Navigator
       initialRouteName="LoginScreen"
       screenOptions={{headerShown: false}}>
-      <MainStack.Screen name="LoginScreen" component={LoginScreen} />
-      <MainStack.Screen name="OtpScreen" component={OtpScreen} />
+      <MainStack.Screen
+        options={({navigation, route}) => ({
+          headerShown: true,
+          ...headerStyleTransparent,
+          title: 'Sign in',
+        })}
+        name="LoginScreen"
+        component={LoginScreen}
+      />
+      <MainStack.Screen
+        options={({navigation, route}) => ({
+          headerShown: true,
+          ...headerStyleTransparent,
+          title: 'Verify OTP',
+          headerLeft: () => <HeaderLeft navigation={navigation} />,
+        })}
+        name="OtpScreen"
+        component={OtpScreen}
+      />
       <MainStack.Screen
         options={({navigation, route}) => ({
           headerShown: true,
@@ -367,4 +439,30 @@ const RootContainer: FC = () => {
   );
 };
 export default RootContainer;
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  drawerItemIcon: {
+    width: 25,
+    height: 25,
+    tintColor:color.black
+  },
+  logoIcon: {
+    width: wp(30),
+    height: wp(30),
+    borderRadius: wp(30),
+    marginTop: 10,
+  },
+  drawerContent: {
+    marginVertical: hp(2),
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginHorizontal: 12,
+  },
+  userName: {
+    marginTop: hp(2),
+    ...commonFontStyle(400, 16, color.startGray),
+  },
+  labelText: {
+    marginLeft: wp(4),
+    ...commonFontStyle(400, 18, color.black),
+  },
+});

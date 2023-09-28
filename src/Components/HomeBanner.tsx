@@ -33,7 +33,6 @@ const HomeBanner: React.FC<Props> = ({}) => {
               height: 160,
               width: width,
               resizeMode: 'cover',
-              backgroundColor: 'red',
               alignSelf: 'center',
               borderRadius: 10,
             }}

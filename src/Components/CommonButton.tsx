@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: color.PRIMARY_GREEN,
+
   },
   text: {
     ...commonFontStyle(500, 18, color.white),

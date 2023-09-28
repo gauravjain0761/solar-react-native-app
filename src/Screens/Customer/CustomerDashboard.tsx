@@ -23,35 +23,28 @@ const CustomerDashboard = (props: Props) => {
     <View style={[AppStyles.paddingHorizontalView, AppStyles.container]}>
       <HomeBanner />
       <ScrollView>
-        <View>
-          <CommonButton
+        <View style={styles.cardMainStyle}>
+          {/* <CommonButton
             style={styles.btn}
             title="Check maintenence video"
             onPress={() => {}}
-          />
+          /> */}
           <View style={styles.rowView}>
             <TouchableOpacity
               onPress={() => navigation.navigate('RequireSolarForm')}
-              style={[
-                styles.boxView,
-                {
-                  backgroundColor: 'rgba(6, 42, 184,0.2)',
-                  borderBottomWidth: 5,
-                  borderRadius: 15,
-                },
-              ]}>
+              style={[styles.boxView]}>
               <Text style={styles.boxText}>Require Solar</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('MaintenenceForm')}
               style={[
                 styles.boxView,
-                {
-                  backgroundColor: 'rgba(175, 6, 184,0.2)',
-                  borderBottomWidth: 5,
-                  borderRadius: 15,
-                  borderColor: 'rgba(175, 6, 184,1)',
-                },
+                // {
+                //   backgroundColor: 'rgba(175, 6, 184,0.2)',
+                //   borderBottomWidth: 5,
+                //   borderRadius: 15,
+                //   borderColor: 'rgba(175, 6, 184,1)',
+                // },
               ]}>
               <Text style={styles.boxText}>Operation & Maintenence</Text>
             </TouchableOpacity>
@@ -60,35 +53,63 @@ const CustomerDashboard = (props: Props) => {
             <TouchableOpacity
               style={[
                 styles.boxView,
-                {
-                  backgroundColor: 'rgba(6, 184, 71,0.2)',
-                  borderBottomWidth: 5,
-                  borderRadius: 15,
-                  borderColor: 'rgba(6, 184, 71,1)',
-                },
+                // {
+                //   backgroundColor: 'rgba(6, 184, 71,0.2)',
+                //   borderBottomWidth: 5,
+                //   borderRadius: 15,
+                //   borderColor: 'rgba(6, 184, 71,1)',
+                // },
               ]}>
               <Text style={styles.boxText}>Solar Insurance</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 styles.boxView,
-                {
-                  backgroundColor: 'rgba(6, 169, 184,0.2)',
-                  borderBottomWidth: 5,
-                  borderRadius: 15,
-                  borderColor: 'rgba(6, 169, 184,1)',
-                },
+                // {
+                //   backgroundColor: 'rgba(6, 169, 184,0.2)',
+                //   borderBottomWidth: 5,
+                //   borderRadius: 15,
+                //   borderColor: 'rgba(6, 169, 184,1)',
+                // },
               ]}>
               <Text style={styles.boxText}>Solar on EMI</Text>
             </TouchableOpacity>
           </View>
-          <CommonButton
+          <View style={styles.rowView}>
+            <TouchableOpacity
+              style={[
+                styles.boxView,
+                // {
+                //   backgroundColor: 'rgba(6, 184, 71,0.2)',
+                //   borderBottomWidth: 5,
+                //   borderRadius: 15,
+                //   borderColor: 'rgba(6, 184, 71,1)',
+                // },
+              ]}>
+              <Text style={styles.boxText}>{'Check maintenence video'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.boxView,
+                // {
+                //   backgroundColor: 'rgba(6, 169, 184,0.2)',
+                //   borderBottomWidth: 5,
+                //   borderRadius: 15,
+                //   borderColor: 'rgba(6, 169, 184,1)',
+                // },
+              ]}>
+              <Text style={styles.boxText}>
+                {'Want to registeras solar company?'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {/* <CommonButton
             style={styles.btn2}
             title="Want to register as solar company?"
             onPress={() => {
               navigation.navigate('CompanySignupScreen');
             }}
-          />
+          /> */}
         </View>
       </ScrollView>
       <TouchableOpacity style={styles.imageView}>
@@ -107,22 +128,29 @@ const styles = StyleSheet.create({
   btn: {
     marginVertical: hp(3),
   },
+  cardMainStyle: {
+    marginTop: hp(2),
+  },
   rowView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: hp(2),
   },
+
   boxView: {
     padding: hp(2),
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: color.PRIMARY_GREEN,
     borderRadius: 10,
-    width: '47%',
+    width: '48%',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 100,
+    height: hp(18.5),
+    shadowColor:color.black_30,
+    elevation: 4,
   },
   boxText: {
+    textAlign:'center',
     ...commonFontStyle(500, 19, color.FONT_DARK_VIOLET),
   },
   btn2: {

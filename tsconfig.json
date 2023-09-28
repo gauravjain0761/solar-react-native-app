@@ -1,3 +1,10 @@
 {
+  "compilerOptions": {
+    "jsx": "react"
+  },
+  "compilerOptions": {
+    "jsx": "react"
+  },
+  "typescript.validate.enable": true,
   "extends": "@tsconfig/react-native/tsconfig.json"
 }
