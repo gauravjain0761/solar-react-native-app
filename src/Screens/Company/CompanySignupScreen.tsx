@@ -18,7 +18,7 @@ const CompanySignupScreen = (props: Props) => {
     company_name: '',
     owner_name: '',
     mobile: '',
-    location: '',
+    city: '',
     address: '',
     gstNo: '',
     required_installation: '',
@@ -48,10 +48,10 @@ const CompanySignupScreen = (props: Props) => {
           placeholder={'Enter Mobile Number'}
         />
         <CommonInput
-          title={'Location'}
-          value={data.location}
-          onChangeText={text => setData({...data, location: text})}
-          placeholder={'Enter location'}
+          title={'City'}
+          value={data.city}
+          onChangeText={text => setData({...data, city: text})}
+          placeholder={'Enter city'}
         />
         <CommonInput
           title={'Address'}
@@ -79,7 +79,7 @@ const CompanySignupScreen = (props: Props) => {
         />
         <CommonButton
           title="Register"
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate('LoginScreen')}
           style={styles.btn}
         />
       </ScrollView>

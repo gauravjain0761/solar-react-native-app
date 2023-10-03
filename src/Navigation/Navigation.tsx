@@ -34,6 +34,10 @@ import HelpScreen from '../Screens/HelpScreen';
 import RateReviewScreen from '../Screens/RateReviewScreen';
 import RequireSolarForm from '../Screens/Customer/RequireSolarForm';
 import MaintenenceForm from '../Screens/Customer/MaintenenceForm';
+import SolarInsurance from '../Screens/Customer/SolarInsurance';
+import SolarEMI from '../Screens/Customer/SolarEMI';
+import VideoListScreen from '../Screens/Customer/VideoListScreen';
+import FAQScreen from '../Screens/FAQScreen';
 
 type RootStackParamList = {
   LoginScreen: undefined;
@@ -101,6 +105,11 @@ let DrawerItemArray = [
     image: require('../assets/images/review.png'),
     screen: 'RateReviewScreen',
   },
+  {
+    label: 'FAQ',
+    image: require('../assets/images/about.png'),
+    screen: 'FAQScreen',
+  },
 ];
 function CustomDrawerContent(props) {
   return (
@@ -135,8 +144,8 @@ function CustomDrawerContent(props) {
         })}
       </ScrollView>
       <TouchableOpacity
-      onPress={() => props.navigation.navigate("LoginScreen")}
-       style={styles.drawerContent}>
+        onPress={() => props.navigation.navigate('LoginScreen')}
+        style={styles.drawerContent}>
         <Image
           style={[styles.drawerItemIcon]}
           source={require('../assets/images/switch.png')}
@@ -196,145 +205,77 @@ const CustomerStackNavigator: FC = () => {
         drawerInactiveTintColor: color.starText,
         // drawerActiveTintColor: color.PRIMARY_GREEN,
       })}>
-      <CompanyStack.Screen
+      <CustomerStack.Screen
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Dashboard',
-          drawerIcon: ({focused, size}) => (
-            <Image
-              source={require('../assets/images/ic_home.png')}
-              style={{
-                height: 20,
-                resizeMode: 'contain',
-                width: 20,
-                tintColor: focused ? color.PRIMARY_GREEN : color.starText,
-              }}
-            />
-          ),
         })}
         name="CustomerDashboard"
         component={CustomerDashboard}
       />
-      <CompanyStack.Screen
+      <CustomerStack.Screen
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Profile',
-          drawerIcon: ({focused, size}) => (
-            <Image
-              source={require('../assets/images/ic_user.png')}
-              style={{
-                height: 20,
-                resizeMode: 'contain',
-                width: 20,
-                tintColor: focused ? color.PRIMARY_GREEN : color.starText,
-              }}
-            />
-          ),
         })}
         name="CustomerProfile"
         component={CustomerProfile}
       />
-      <CompanyStack.Screen
+      <CustomerStack.Screen
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'My Coupons',
-          drawerIcon: ({focused, size}) => (
-            <Image
-              source={require('../assets/images/promocode.png')}
-              style={{
-                height: 20,
-                resizeMode: 'contain',
-                width: 20,
-                tintColor: focused ? color.PRIMARY_GREEN : color.starText,
-              }}
-            />
-          ),
         })}
         name="MyCouponsScreen"
         component={MyCouponsScreen}
       />
-      <CompanyStack.Screen
+      <CustomerStack.Screen
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Contact Us',
-          drawerIcon: ({focused, size}) => (
-            <Image
-              source={require('../assets/images/contact-mail.png')}
-              style={{
-                height: 20,
-                resizeMode: 'contain',
-                width: 20,
-                tintColor: focused ? color.PRIMARY_GREEN : color.starText,
-              }}
-            />
-          ),
         })}
         name="ContactUsScreen"
         component={ContactUsScreen}
       />
-      <CompanyStack.Screen
+      <CustomerStack.Screen
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'About Us',
-          drawerIcon: ({focused, size}) => (
-            <Image
-              source={require('../assets/images/about.png')}
-              style={{
-                height: 20,
-                resizeMode: 'contain',
-                width: 20,
-                tintColor: focused ? color.PRIMARY_GREEN : color.starText,
-              }}
-            />
-          ),
         })}
         name="AboutUsScreen"
         component={AboutUsScreen}
       />
-      <CompanyStack.Screen
+      <CustomerStack.Screen
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Help',
-          drawerIcon: ({focused, size}) => (
-            <Image
-              source={require('../assets/images/contactUs.png')}
-              style={{
-                height: 20,
-                resizeMode: 'contain',
-                width: 20,
-                tintColor: focused ? color.PRIMARY_GREEN : color.starText,
-              }}
-            />
-          ),
         })}
         name="HelpScreen"
         component={HelpScreen}
       />
-      <CompanyStack.Screen
+      <CustomerStack.Screen
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Rate & Review',
-          drawerIcon: ({focused, size}) => (
-            <Image
-              source={require('../assets/images/review.png')}
-              style={{
-                height: 20,
-                resizeMode: 'contain',
-                width: 20,
-                tintColor: focused ? color.PRIMARY_GREEN : color.starText,
-              }}
-            />
-          ),
         })}
         name="RateReviewScreen"
         component={RateReviewScreen}
+      />
+      <CustomerStack.Screen
+        options={({navigation, route}) => ({
+          headerShown: true,
+          ...headerStyleTransparent,
+          title: 'FAQ',
+        })}
+        name="FAQScreen"
+        component={FAQScreen}
       />
     </CustomerStack.Navigator>
   );
@@ -387,7 +328,7 @@ const MainStackNavigator: FC = () => {
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
-          title: 'Register as Costomer',
+          title: 'Register as Customer',
           headerLeft: () => <HeaderLeft navigation={navigation} />,
         })}
         name="CustomerSignupScreen"
@@ -417,12 +358,43 @@ const MainStackNavigator: FC = () => {
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
+          title: 'Solar Insurance',
+          headerLeft: () => <HeaderLeft navigation={navigation} />,
+        })}
+        name="SolarInsurance"
+        component={SolarInsurance}
+      />
+      <MainStack.Screen
+        options={({navigation, route}) => ({
+          headerShown: true,
+          ...headerStyleTransparent,
+          title: 'Solar on EMI',
+          headerLeft: () => <HeaderLeft navigation={navigation} />,
+        })}
+        name="SolarEMI"
+        component={SolarEMI}
+      />
+      <MainStack.Screen
+        options={({navigation, route}) => ({
+          headerShown: true,
+          ...headerStyleTransparent,
+          title: 'Maintenence Video',
+          headerLeft: () => <HeaderLeft navigation={navigation} />,
+        })}
+        name="VideoListScreen"
+        component={VideoListScreen}
+      />
+      <MainStack.Screen
+        options={({navigation, route}) => ({
+          headerShown: true,
+          ...headerStyleTransparent,
           title: 'Register as Company',
           headerLeft: () => <HeaderLeft navigation={navigation} />,
         })}
         name="CompanySignupScreen"
         component={CompanySignupScreen}
       />
+
       <MainStack.Screen
         name="CompanyDashboard"
         component={CompanyStackNavigator}
@@ -443,7 +415,8 @@ const styles = StyleSheet.create({
   drawerItemIcon: {
     width: 25,
     height: 25,
-    tintColor:color.black
+    tintColor: color.black,
+    resizeMode: 'contain',
   },
   logoIcon: {
     width: wp(30),

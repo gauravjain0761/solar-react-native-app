@@ -1,26 +1,25 @@
 import {
+  Image,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {commonFontStyle, hp} from '../Theme/Fonts';
 import {color} from '../Theme/color';
+import Modal from 'react-native-modal';
+import ActionSheet from './ActionSheet';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import {AppStyles} from '../Theme/AppStyles';
 
 type Props = {
   value: any;
   placeholder: string;
   onChangeText?: (text: any) => void;
   title: string;
-  secureTextEntry?: boolean;
   style?: any;
-  onSubmitEditing?: () => void;
-  reference?: any;
-  keyboardType?: any;
-  maxLength?: number;
-  onPress: () => void;
 };
 
 const BillView: React.FC<Props> = ({
@@ -28,26 +27,82 @@ const BillView: React.FC<Props> = ({
   placeholder,
   onChangeText,
   title,
-  secureTextEntry,
   style,
-  onSubmitEditing,
-  reference,
-  keyboardType,
-  maxLength,
-  onPress,
 }) => {
+  const actionItems = [
+    {
+      id: 1,
+      label: 'Open Camera',
+      onPress: () => {
+        openPicker();
+      },
+    },
+    {
+      id: 2,
+      label: 'Open Gallery',
+      onPress: () => {
+        openGallery();
+      },
+    },
+  ];
+  const openPicker = () => {
+    closeActionSheet();
+    ImageCropPicker.openCamera({
+      mediaType: 'photo',
+    }).then(image => {
+      console.log(image);
+      let temp = {
+        ...image,
+        name: 'image_' + new Date().getTime() + '.png',
+      };
+      onChangeText(temp);
+    });
+  };
+  const openGallery = () => {
+    closeActionSheet();
+    ImageCropPicker.openPicker({
+      mediaType: 'photo',
+    }).then(image => {
+      let temp = {
+        ...image,
+        name: image.path.split('/').pop(),
+      };
+      onChangeText(temp);
+    });
+  };
+  const [actionSheet, setActionSheet] = useState(false);
+  const closeActionSheet = () => setActionSheet(false);
   return (
     <View style={[styles.container, {...style}]}>
       {title && <Text style={styles.title}>{title}</Text>}
-      <TouchableOpacity onPress={() => onPress()} style={[styles.input]}>
-        {value ? (
-          <Text style={styles.text}>{value}</Text>
-        ) : (
-          <Text style={[styles.text, {color: 'rgba(0,0,0,0.3)'}]}>
-            {placeholder}
-          </Text>
-        )}
+      <TouchableOpacity
+        onPress={() => setActionSheet(true)}
+        style={[styles.input]}>
+        <Image
+          source={
+            value ? {uri: value.path} : require('../assets/images/addimage.png')
+          }
+          style={styles.addImageIcon}
+        />
+        <View style={AppStyles.flex}>
+          {value ? (
+            <Text style={styles.text}>{value.name}</Text>
+          ) : (
+            <Text style={[styles.text, {color: 'rgba(0,0,0,0.3)'}]}>
+              {placeholder}
+            </Text>
+          )}
+        </View>
       </TouchableOpacity>
+      <Modal
+        onBackdropPress={() => closeActionSheet()}
+        isVisible={actionSheet}
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+        }}>
+        <ActionSheet actionItems={actionItems} onCancel={closeActionSheet} />
+      </Modal>
     </View>
   );
 };
@@ -67,10 +122,19 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginBottom: hp(3),
     ...commonFontStyle(400, 18, color.black),
-    justifyContent: 'center',
+    borderStyle: 'dashed',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   container: {
     backgroundColor: color.white,
   },
   text: {...commonFontStyle(400, 18, color.black)},
+  addImageIcon: {
+    height: hp(4),
+    width: hp(4),
+    resizeMode: 'cover',
+    marginRight: hp(1),
+    borderRadius: 5,
+  },
 });

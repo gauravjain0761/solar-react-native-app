@@ -30,10 +30,6 @@ const RequireSolarForm = (props: Props) => {
   });
   const navigation = useNavigation();
 
-  const onSelectBill = async () => {
-    const res = await openDocPicker();
-    setData({...data, ebill: res});
-  };
   return (
     <View style={AppStyles.flex}>
       <ScrollView style={AppStyles.containerWithPadding}>
@@ -56,12 +52,7 @@ const RequireSolarForm = (props: Props) => {
           onChangeText={text => setData({...data, email: text})}
           placeholder={'Enter Email'}
         />
-        <BillView
-          title={'Latest Electricity Bill'}
-          placeholder={'Select Latest Electricity Bill'}
-          value={data.ebill ? data.ebill.name : undefined}
-          onPress={() => onSelectBill()}
-        />
+
         <CommonInput
           title={'State'}
           value={data.state}
@@ -79,6 +70,12 @@ const RequireSolarForm = (props: Props) => {
           value={data.address}
           onChangeText={text => setData({...data, address: text})}
           placeholder={'Enter Address'}
+        />
+        <BillView
+          title={'Latest Electricity Bill'}
+          placeholder={'Select Latest Electricity Bill'}
+          value={data.ebill ? data.ebill : undefined}
+          onChangeText={res => setData({...data, ebill: res})}
         />
         <CommonButton
           title="Submit"

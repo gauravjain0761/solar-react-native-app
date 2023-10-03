@@ -51,6 +51,7 @@ const CustomerDashboard = (props: Props) => {
           </View>
           <View style={styles.rowView}>
             <TouchableOpacity
+              onPress={() => navigation.navigate('SolarInsurance')}
               style={[
                 styles.boxView,
                 // {
@@ -63,6 +64,7 @@ const CustomerDashboard = (props: Props) => {
               <Text style={styles.boxText}>Solar Insurance</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={() => navigation.navigate('SolarEMI')}
               style={[
                 styles.boxView,
                 // {
@@ -77,6 +79,7 @@ const CustomerDashboard = (props: Props) => {
           </View>
           <View style={styles.rowView}>
             <TouchableOpacity
+              onPress={() => navigation.navigate('VideoListScreen')}
               style={[
                 styles.boxView,
                 // {
@@ -89,6 +92,9 @@ const CustomerDashboard = (props: Props) => {
               <Text style={styles.boxText}>{'Check maintenence video'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('CompanySignupScreen');
+              }}
               style={[
                 styles.boxView,
                 // {
@@ -146,11 +152,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: hp(18.5),
-    shadowColor:color.black_30,
-    elevation: 4,
+    shadowColor: color.black_30,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
   },
   boxText: {
-    textAlign:'center',
+    textAlign: 'center',
     ...commonFontStyle(500, 19, color.FONT_DARK_VIOLET),
   },
   btn2: {

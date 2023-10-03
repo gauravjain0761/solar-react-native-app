@@ -21,16 +21,17 @@ const CustomerSignupScreen = (props: Props) => {
     name: '',
     mobile: '',
     email: '',
-    location: '',
+    city: '',
     address: '',
-    ebill: undefined,
+    referralCode: '',
+    // ebill: undefined,
   });
   const navigation = useNavigation();
 
-  const onSelectBill = async () => {
-    const res = await openDocPicker();
-    setData({...data, ebill: res});
-  };
+  // const onSelectBill = async () => {
+  //   const res = await openDocPicker();
+  //   setData({...data, ebill: res});
+  // };
   return (
     <View style={AppStyles.flex}>
       <ScrollView style={AppStyles.containerWithPadding}>
@@ -53,17 +54,17 @@ const CustomerSignupScreen = (props: Props) => {
           onChangeText={text => setData({...data, email: text})}
           placeholder={'Enter email'}
         />
-        <BillView
+        {/* <BillView
           title={'Latest Electricity Bill'}
           placeholder={'Select Latest Electricity Bill'}
           value={data.ebill ? data.ebill.name : undefined}
           onPress={() => onSelectBill()}
-        />
+        /> */}
         <CommonInput
-          title={'Location'}
-          value={data.location}
-          onChangeText={text => setData({...data, location: text})}
-          placeholder={'Enter location'}
+          title={'City'}
+          value={data.city}
+          onChangeText={text => setData({...data, city: text})}
+          placeholder={'Enter city'}
         />
         <CommonInput
           title={'Address'}
@@ -71,15 +72,15 @@ const CustomerSignupScreen = (props: Props) => {
           onChangeText={text => setData({...data, address: text})}
           placeholder={'Enter address'}
         />
-        {/* <CommonInput
-          title={'Location'}
-          value={data.location}
-          onChangeText={text => setData({...data, location: text})}
-          placeholder={'Enter location'}
-        /> */}
+        <CommonInput
+          title={'Referral Code'}
+          value={data.referralCode}
+          onChangeText={text => setData({...data, referralCode: text})}
+          placeholder={'Enter referral code'}
+        />
         <CommonButton
           title="Register"
-          onPress={() => navigation.navigate('CustomerDashboard')}
+          onPress={() => navigation.navigate('LoginScreen')}
           style={styles.btn}
         />
       </ScrollView>
