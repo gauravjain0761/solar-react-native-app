@@ -20,7 +20,7 @@ const ChooseSignupScreen = (props: Props) => {
         <TouchableOpacity
           onPress={() => navigation.navigate('CompanySignupScreen')}
           style={styles.boxView}>
-          <Text style={styles.boxText}>Register as Company</Text>
+          <Text style={styles.boxText}>Join as a{'\n'}partner</Text>
         </TouchableOpacity>
       </View>
     </View>

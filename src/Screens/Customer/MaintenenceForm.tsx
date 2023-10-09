@@ -16,6 +16,7 @@ import DocumentPicker from 'react-native-document-picker';
 import {openDocPicker} from '../../Utils/CommonFunction';
 import BillView from '../../Components/BillView';
 import DropdownElement from '../../Components/DropdownElement';
+import {categoryData, cityStateData} from '../../Utils/Constants';
 
 type Props = {};
 
@@ -30,6 +31,7 @@ const MaintenenceForm = (props: Props) => {
     reason: '',
     solarCapacity: '',
     ebill: undefined,
+    category: '',
   });
   const navigation = useNavigation();
 
@@ -73,23 +75,49 @@ const MaintenenceForm = (props: Props) => {
           labelField={'name'}
           title={'Maintenance Reason'}
         />
+        <DropdownElement
+          data={categoryData}
+          value={data.category}
+          setData={(text: any) => setData({...data, category: text})}
+          // multiSelect={true}
+          placeholder={'Select category'}
+          valueField={'value'}
+          labelField={'name'}
+          title={'Category'}
+        />
         <CommonInput
           title={'Solar Capacity'}
           value={data.solarCapacity}
           onChangeText={text => setData({...data, solarCapacity: text})}
           placeholder={'Enter solar capacity'}
         />
-        <CommonInput
-          title={'State'}
+        <DropdownElement
+          data={cityStateData}
           value={data.state}
-          onChangeText={text => setData({...data, state: text})}
-          placeholder={'Enter State'}
+          setData={(text: any) => setData({...data, state: text})}
+          // multiSelect={true}
+          placeholder={'Select state'}
+          valueField={'state'}
+          labelField={'state'}
+          title={'State'}
+          isSearch={true}
+          searchPlaceholder="Enter state to search..."
         />
-        <CommonInput
-          title={'City'}
+        <DropdownElement
+          data={
+            data.state !== ''
+              ? cityStateData.filter(obj => obj.state == data.state)[0].city
+              : []
+          }
           value={data.city}
-          onChangeText={text => setData({...data, city: text})}
-          placeholder={'Enter City'}
+          setData={(text: any) => setData({...data, city: text})}
+          // multiSelect={true}
+          placeholder={'Select city'}
+          valueField={'city'}
+          labelField={'city'}
+          title={'City'}
+          isSearch={true}
+          searchPlaceholder="Enter city to search..."
         />
         <CommonInput
           title={'Address'}

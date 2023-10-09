@@ -15,6 +15,8 @@ import {hp} from '../../Theme/Fonts';
 import DocumentPicker from 'react-native-document-picker';
 import {openDocPicker} from '../../Utils/CommonFunction';
 import BillView from '../../Components/BillView';
+import DropdownElement from '../../Components/DropdownElement';
+import {categoryData, cityStateData} from '../../Utils/Constants';
 
 type Props = {};
 
@@ -27,6 +29,7 @@ const RequireSolarForm = (props: Props) => {
     city: '',
     address: '',
     ebill: undefined,
+    category: '',
   });
   const navigation = useNavigation();
 
@@ -52,18 +55,43 @@ const RequireSolarForm = (props: Props) => {
           onChangeText={text => setData({...data, email: text})}
           placeholder={'Enter Email'}
         />
-
-        <CommonInput
-          title={'State'}
-          value={data.state}
-          onChangeText={text => setData({...data, state: text})}
-          placeholder={'Enter State'}
+        <DropdownElement
+          data={categoryData}
+          value={data.category}
+          setData={(text: any) => setData({...data, category: text})}
+          // multiSelect={true}
+          placeholder={'Select category'}
+          valueField={'value'}
+          labelField={'name'}
+          title={'Category'}
         />
-        <CommonInput
-          title={'City'}
+        <DropdownElement
+          data={cityStateData}
+          value={data.state}
+          setData={(text: any) => setData({...data, state: text})}
+          // multiSelect={true}
+          placeholder={'Select state'}
+          valueField={'state'}
+          labelField={'state'}
+          title={'State'}
+          isSearch={true}
+          searchPlaceholder="Enter state to search..."
+        />
+        <DropdownElement
+          data={
+            data.state !== ''
+              ? cityStateData.filter(obj => obj.state == data.state)[0].city
+              : []
+          }
           value={data.city}
-          onChangeText={text => setData({...data, city: text})}
-          placeholder={'Enter City'}
+          setData={(text: any) => setData({...data, city: text})}
+          // multiSelect={true}
+          placeholder={'Select city'}
+          valueField={'city'}
+          labelField={'city'}
+          title={'City'}
+          isSearch={true}
+          searchPlaceholder="Enter city to search..."
         />
         <CommonInput
           title={'Address'}

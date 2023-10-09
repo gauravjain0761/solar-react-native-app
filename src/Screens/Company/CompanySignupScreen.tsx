@@ -11,6 +11,8 @@ import CommonButton from '../../Components/CommonButton';
 import {useNavigation} from '@react-navigation/native';
 import {AppStyles} from '../../Theme/AppStyles';
 import {hp} from '../../Theme/Fonts';
+import DropdownElement from '../../Components/DropdownElement';
+import {cityStateData} from '../../Utils/Constants';
 
 type Props = {};
 const CompanySignupScreen = (props: Props) => {
@@ -19,6 +21,7 @@ const CompanySignupScreen = (props: Props) => {
     owner_name: '',
     mobile: '',
     city: '',
+    state: '',
     address: '',
     gstNo: '',
     required_installation: '',
@@ -47,11 +50,33 @@ const CompanySignupScreen = (props: Props) => {
           onChangeText={text => setData({...data, mobile: text})}
           placeholder={'Enter Mobile Number'}
         />
-        <CommonInput
-          title={'City'}
+        <DropdownElement
+          data={cityStateData}
+          value={data.state}
+          setData={(text: any) => setData({...data, state: text})}
+          // multiSelect={true}
+          placeholder={'Select state'}
+          valueField={'state'}
+          labelField={'state'}
+          title={'State'}
+          isSearch={true}
+          searchPlaceholder="Enter state to search..."
+        />
+        <DropdownElement
+          data={
+            data.state !== ''
+              ? cityStateData.filter(obj => obj.state == data.state)[0].city
+              : []
+          }
           value={data.city}
-          onChangeText={text => setData({...data, city: text})}
-          placeholder={'Enter city'}
+          setData={(text: any) => setData({...data, city: text})}
+          // multiSelect={true}
+          placeholder={'Select city'}
+          valueField={'city'}
+          labelField={'city'}
+          title={'City'}
+          isSearch={true}
+          searchPlaceholder="Enter city to search..."
         />
         <CommonInput
           title={'Address'}

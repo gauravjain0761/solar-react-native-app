@@ -7,7 +7,7 @@ import {
   View,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {AppStyles} from '../../Theme/AppStyles';
 import HomeBanner from '../../Components/HomeBanner';
 import CommonButton from '../../Components/CommonButton';
@@ -19,6 +19,7 @@ type Props = {};
 
 const CustomerDashboard = (props: Props) => {
   const navigation = useNavigation();
+
   return (
     <View style={[AppStyles.paddingHorizontalView, AppStyles.container]}>
       <HomeBanner />
@@ -33,7 +34,7 @@ const CustomerDashboard = (props: Props) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('RequireSolarForm')}
               style={[styles.boxView]}>
-              <Text style={styles.boxText}>Require Solar</Text>
+              <Text style={styles.boxText}>Required Solar</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('MaintenenceForm')}
@@ -46,7 +47,7 @@ const CustomerDashboard = (props: Props) => {
                 //   borderColor: 'rgba(175, 6, 184,1)',
                 // },
               ]}>
-              <Text style={styles.boxText}>Operation & Maintenence</Text>
+              <Text style={styles.boxText}>Service & Cleaning</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.rowView}>
@@ -105,7 +106,7 @@ const CustomerDashboard = (props: Props) => {
                 // },
               ]}>
               <Text style={styles.boxText}>
-                {'Want to registeras solar company?'}
+                {'Want to register as solar company?'}
               </Text>
             </TouchableOpacity>
           </View>

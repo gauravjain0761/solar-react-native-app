@@ -338,7 +338,7 @@ const MainStackNavigator: FC = () => {
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
-          title: 'Require Solar',
+          title: 'Required Solar',
           headerLeft: () => <HeaderLeft navigation={navigation} />,
         })}
         name="RequireSolarForm"
@@ -348,7 +348,7 @@ const MainStackNavigator: FC = () => {
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
-          title: 'Operation & Maintenence',
+          title: 'Service & Cleaning',
           headerLeft: () => <HeaderLeft navigation={navigation} />,
         })}
         name="MaintenenceForm"
@@ -388,7 +388,7 @@ const MainStackNavigator: FC = () => {
         options={({navigation, route}) => ({
           headerShown: true,
           ...headerStyleTransparent,
-          title: 'Register as Company',
+          title: 'Join as a partner',
           headerLeft: () => <HeaderLeft navigation={navigation} />,
         })}
         name="CompanySignupScreen"

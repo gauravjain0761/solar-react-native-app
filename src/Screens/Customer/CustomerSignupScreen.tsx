@@ -13,6 +13,8 @@ import {AppStyles} from '../../Theme/AppStyles';
 import {hp} from '../../Theme/Fonts';
 import {openDocPicker} from '../../Utils/CommonFunction';
 import BillView from '../../Components/BillView';
+import DropdownElement from '../../Components/DropdownElement';
+import {cityStateData} from '../../Utils/Constants';
 
 type Props = {};
 
@@ -22,16 +24,13 @@ const CustomerSignupScreen = (props: Props) => {
     mobile: '',
     email: '',
     city: '',
+    state: '',
     address: '',
     referralCode: '',
     // ebill: undefined,
   });
   const navigation = useNavigation();
 
-  // const onSelectBill = async () => {
-  //   const res = await openDocPicker();
-  //   setData({...data, ebill: res});
-  // };
   return (
     <View style={AppStyles.flex}>
       <ScrollView style={AppStyles.containerWithPadding}>
@@ -60,11 +59,33 @@ const CustomerSignupScreen = (props: Props) => {
           value={data.ebill ? data.ebill.name : undefined}
           onPress={() => onSelectBill()}
         /> */}
-        <CommonInput
-          title={'City'}
+        <DropdownElement
+          data={cityStateData}
+          value={data.state}
+          setData={(text: any) => setData({...data, state: text})}
+          // multiSelect={true}
+          placeholder={'Select state'}
+          valueField={'state'}
+          labelField={'state'}
+          title={'State'}
+          isSearch={true}
+          searchPlaceholder="Enter state to search..."
+        />
+        <DropdownElement
+          data={
+            data.state !== ''
+              ? cityStateData.filter(obj => obj.state == data.state)[0].city
+              : []
+          }
           value={data.city}
-          onChangeText={text => setData({...data, city: text})}
-          placeholder={'Enter city'}
+          setData={(text: any) => setData({...data, city: text})}
+          // multiSelect={true}
+          placeholder={'Select city'}
+          valueField={'city'}
+          labelField={'city'}
+          title={'City'}
+          isSearch={true}
+          searchPlaceholder="Enter city to search..."
         />
         <CommonInput
           title={'Address'}

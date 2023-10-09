@@ -14,6 +14,8 @@ type Props = {
   placeholderTextColor: any;
   labelField: any;
   title: any;
+  isSearch: boolean;
+  searchPlaceholder: any;
 };
 
 const DropdownElement: React.FC<Props> = ({
@@ -26,6 +28,8 @@ const DropdownElement: React.FC<Props> = ({
   placeholderTextColor,
   labelField,
   title,
+  isSearch = false,
+  searchPlaceholder,
 }) => {
   return (
     <View style={[styles.container, {...style}]}>
@@ -36,13 +40,16 @@ const DropdownElement: React.FC<Props> = ({
           ...commonFontStyle(400, 18, 'rgba(0,0,0,0.3)'),
           textAlign: 'left',
         }}
+        search={isSearch}
         data={data}
         selectedTextStyle={{...commonFontStyle(400, 18, color.black)}}
         iconColor={color.black}
         labelField={labelField}
         valueField={valueField}
-        maxHeight={300}
+        maxHeight={250}
         placeholder={placeholder}
+        searchPlaceholder={searchPlaceholder}
+        inputSearchStyle={{...commonFontStyle(400, 16, 'rgba(0,0,0,0.3)')}}
         value={value}
         onChange={item => {
           setData(item[valueField]);
@@ -83,5 +90,6 @@ const styles = StyleSheet.create({
   textItem: {
     paddingVertical: 10,
     paddingHorizontal: hp(2),
+    color: color.black,
   },
 });
