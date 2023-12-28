@@ -1,15 +1,17 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import { StyleSheet, Text, TextInput, View, ViewStyle } from 'react-native';
 import React from 'react';
-import {commonFontStyle, hp} from '../Theme/Fonts';
-import {color} from '../Theme/color';
+import { commonFontStyle, hp } from '../Theme/Fonts';
+import { color } from '../Theme/color';
+import { AppStyles } from '../Theme/AppStyles';
+
 
 type Props = {
   value: any;
   placeholder: string;
   onChangeText?: (text: any) => void;
-  title: string;
+  title?: string;
   secureTextEntry?: boolean;
-  style?: any;
+  style?: ViewStyle;
   onSubmitEditing?: () => void;
   reference?: any;
   keyboardType?: any;
@@ -29,7 +31,7 @@ const CommonInput: React.FC<Props> = ({
   maxLength,
 }) => {
   return (
-    <View style={[styles.container, {...style}]}>
+    <View style={[styles.container, { ...style }]}>
       {title && <Text style={styles.title}>{title}</Text>}
       <TextInput
         value={value}
@@ -39,7 +41,7 @@ const CommonInput: React.FC<Props> = ({
         style={[styles.input]}
         secureTextEntry={secureTextEntry ? secureTextEntry : false}
         placeholder={placeholder ? placeholder : ''}
-        placeholderTextColor={'rgba(0,0,0,0.3)'}
+        placeholderTextColor={color.placeholderTextGray}
         onSubmitEditing={() => (onSubmitEditing ? onSubmitEditing() : {})}
         returnKeyType={onSubmitEditing ? 'next' : 'default'}
         ref={reference ? reference : null}
@@ -54,19 +56,21 @@ export default CommonInput;
 
 const styles = StyleSheet.create({
   title: {
-    ...commonFontStyle(400, 18, color.black),
+    ...commonFontStyle(700, 14, color.titleTextInputDarkBlue),
     marginBottom: 8,
+
   },
   input: {
-    borderWidth: 1,
-    borderColor: color.input_border,
-    height: hp(7),
+    height: 50,
     paddingHorizontal: hp(2),
-    borderRadius: 15,
+    borderRadius: 10,
     marginBottom: hp(3),
-    ...commonFontStyle(400, 18, color.black),
+    ...commonFontStyle(400, 12, color.titleTextInputDarkBlue),
+    backgroundColor: color.white,
+    ...AppStyles.shadowview,
   },
   container: {
-    backgroundColor: color.white,
+    // backgroundColor: color.white,
+
   },
 });

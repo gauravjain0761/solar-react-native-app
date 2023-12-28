@@ -1,22 +1,24 @@
 import {
   KeyboardAvoidingView,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CommonInput from '../../Components/CommonInput';
 import CommonButton from '../../Components/CommonButton';
-import {useNavigation} from '@react-navigation/native';
-import {AppStyles} from '../../Theme/AppStyles';
-import {hp} from '../../Theme/Fonts';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles } from '../../Theme/AppStyles';
+import { hp } from '../../Theme/Fonts';
 import DocumentPicker from 'react-native-document-picker';
-import {openDocPicker} from '../../Utils/CommonFunction';
+import { openDocPicker } from '../../Utils/CommonFunction';
 import BillView from '../../Components/BillView';
 import DropdownElement from '../../Components/DropdownElement';
-import {categoryData, cityStateData} from '../../Utils/Constants';
+import { categoryData, cityStateData } from '../../Utils/Constants';
+import { color } from '../../Theme/color';
 
 type Props = {};
 
@@ -35,30 +37,31 @@ const RequireSolarForm = (props: Props) => {
 
   return (
     <View style={AppStyles.flex}>
+      <StatusBar backgroundColor={color.mainBgColor} barStyle={'dark-content'} />
       <ScrollView style={AppStyles.containerWithPadding}>
         <CommonInput
           title={'Name'}
           value={data.name}
-          onChangeText={text => setData({...data, name: text})}
+          onChangeText={text => setData({ ...data, name: text })}
           placeholder={'Enter Name'}
         />
         <CommonInput
           title={'Mobile Number'}
           value={data.mobile}
           keyboardType="number-pad"
-          onChangeText={text => setData({...data, mobile: text})}
+          onChangeText={text => setData({ ...data, mobile: text })}
           placeholder={'Enter Mobile Number'}
         />
         <CommonInput
           title={'Email'}
           value={data.email}
-          onChangeText={text => setData({...data, email: text})}
+          onChangeText={text => setData({ ...data, email: text })}
           placeholder={'Enter Email'}
         />
         <DropdownElement
           data={categoryData}
           value={data.category}
-          setData={(text: any) => setData({...data, category: text})}
+          setData={(text: any) => setData({ ...data, category: text })}
           // multiSelect={true}
           placeholder={'Select category'}
           valueField={'value'}
@@ -68,7 +71,7 @@ const RequireSolarForm = (props: Props) => {
         <DropdownElement
           data={cityStateData}
           value={data.state}
-          setData={(text: any) => setData({...data, state: text})}
+          setData={(text: any) => setData({ ...data, state: text })}
           // multiSelect={true}
           placeholder={'Select state'}
           valueField={'state'}
@@ -84,7 +87,7 @@ const RequireSolarForm = (props: Props) => {
               : []
           }
           value={data.city}
-          setData={(text: any) => setData({...data, city: text})}
+          setData={(text: any) => setData({ ...data, city: text })}
           // multiSelect={true}
           placeholder={'Select city'}
           valueField={'city'}
@@ -96,14 +99,14 @@ const RequireSolarForm = (props: Props) => {
         <CommonInput
           title={'Address'}
           value={data.address}
-          onChangeText={text => setData({...data, address: text})}
+          onChangeText={text => setData({ ...data, address: text })}
           placeholder={'Enter Address'}
         />
         <BillView
           title={'Latest Electricity Bill'}
           placeholder={'Select Latest Electricity Bill'}
           value={data.ebill ? data.ebill : undefined}
-          onChangeText={res => setData({...data, ebill: res})}
+          onChangeText={res => setData({ ...data, ebill: res })}
         />
         <CommonButton
           title="Submit"
@@ -118,5 +121,5 @@ const RequireSolarForm = (props: Props) => {
 export default RequireSolarForm;
 
 const styles = StyleSheet.create({
-  btn: {marginBottom: hp(6)},
+  btn: { marginBottom: hp(6) },
 });

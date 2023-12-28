@@ -1,12 +1,12 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../Screens/HomeScreen';
-import {NavigationContainer} from '@react-navigation/native';
-import {FC} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { FC } from 'react';
 import LoginScreen from '../Screens/LoginScreen';
 import OtpScreen from '../Screens/OtpScreen';
 import SelectCity from '../Screens/SelectCity';
-import {BACK_ARROW} from '../Theme/Resources';
-import {AppStyles} from '../Theme/AppStyles';
+import { BACKBTN, BACK_ARROW } from '../Theme/Resources';
+import { AppStyles } from '../Theme/AppStyles';
 import {
   Image,
   ScrollView,
@@ -15,8 +15,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {color} from '../Theme/color';
-import {commonFontStyle, hp, wp} from '../Theme/Fonts';
+import { color } from '../Theme/color';
+import { commonFontStyle, hp, wp } from '../Theme/Fonts';
 import CustomerDashboard from '../Screens/Customer/CustomerDashboard';
 import ChooseSignupScreen from '../Screens/ChooseSignupScreen';
 import CustomerSignupScreen from '../Screens/Customer/CustomerSignupScreen';
@@ -50,24 +50,24 @@ type RootStackParamList = {
   CompanyDashboard: undefined;
 };
 
-const HeaderLeft = ({navigation}) => {
+const HeaderLeft = ({ navigation }) => {
   return (
     <TouchableOpacity onPress={() => navigation.goBack()}>
-      <Image source={BACK_ARROW} style={AppStyles.backArrow} />
+      <Image source={BACKBTN} style={AppStyles.backArrow} />
     </TouchableOpacity>
   );
 };
 const headerStyleTransparent = {
   headerStyle: {
-    backgroundColor: color.white,
+    backgroundColor: color.mainBgColor,
     shadowOpacity: 0,
     elevation: 0,
   },
+  headerShadowVisible: false,
   headerTitleStyle: {
-    ...commonFontStyle(500, 20, color.black),
-    // width: Dimensions.get('screen').width
+    ...commonFontStyle(700, 16, color.titleDarkBlue),
   },
-  headerTitleAlign: 'center',
+  headerTitleAlign: 'left',
 };
 let DrawerItemArray = [
   {
@@ -162,7 +162,7 @@ const CompanyStackNavigator: FC = () => {
     <CompanyStack.Navigator
       initialRouteName="CompanyDashboard"
       drawerContent={props => <CustomDrawerContent {...props} />}
-      screenOptions={({navigation}) => ({
+      screenOptions={({ navigation }) => ({
         drawerItemStyle: {
           borderRadius: 0,
           marginLeft: 0,
@@ -170,14 +170,14 @@ const CompanyStackNavigator: FC = () => {
         drawerStyle: {},
       })}>
       <CompanyStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Company Dashboard',
-          drawerIcon: ({focused, size}) => (
+          drawerIcon: ({ focused, size }) => (
             <Image
               source={require('../assets/images/ic_home.png')}
-              style={{height: 30, width: 30}}
+              style={{ height: 30, width: 30 }}
             />
           ),
           // headerLeft: () => <HeaderLeft navigation={navigation} />,
@@ -193,9 +193,8 @@ const CustomerStack = createDrawerNavigator<RootStackParamList>();
 const CustomerStackNavigator: FC = () => {
   return (
     <CustomerStack.Navigator
-      initialRouteName="CompanyDashboard"
       drawerContent={props => <CustomDrawerContent {...props} />}
-      screenOptions={({navigation}) => ({
+      screenOptions={({ navigation }) => ({
         drawerItemStyle: {
           borderRadius: 0,
           marginLeft: 0,
@@ -206,16 +205,15 @@ const CustomerStackNavigator: FC = () => {
         // drawerActiveTintColor: color.PRIMARY_GREEN,
       })}>
       <CustomerStack.Screen
-        options={({navigation, route}) => ({
-          headerShown: true,
+        options={({ navigation, route }) => ({
+          headerShown: false,
           ...headerStyleTransparent,
-          title: 'Dashboard',
         })}
         name="CustomerDashboard"
         component={CustomerDashboard}
       />
       <CustomerStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Profile',
@@ -224,7 +222,7 @@ const CustomerStackNavigator: FC = () => {
         component={CustomerProfile}
       />
       <CustomerStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'My Coupons',
@@ -233,7 +231,7 @@ const CustomerStackNavigator: FC = () => {
         component={MyCouponsScreen}
       />
       <CustomerStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Contact Us',
@@ -242,7 +240,7 @@ const CustomerStackNavigator: FC = () => {
         component={ContactUsScreen}
       />
       <CustomerStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'About Us',
@@ -251,7 +249,7 @@ const CustomerStackNavigator: FC = () => {
         component={AboutUsScreen}
       />
       <CustomerStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Help',
@@ -260,7 +258,7 @@ const CustomerStackNavigator: FC = () => {
         component={HelpScreen}
       />
       <CustomerStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Rate & Review',
@@ -269,7 +267,7 @@ const CustomerStackNavigator: FC = () => {
         component={RateReviewScreen}
       />
       <CustomerStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'FAQ',
@@ -286,28 +284,11 @@ const MainStackNavigator: FC = () => {
   return (
     <MainStack.Navigator
       initialRouteName="LoginScreen"
-      screenOptions={{headerShown: false}}>
+      screenOptions={{ headerShown: false }}>
+      <MainStack.Screen name="LoginScreen" component={LoginScreen} />
+      <MainStack.Screen name="OtpScreen" component={OtpScreen} />
       <MainStack.Screen
-        options={({navigation, route}) => ({
-          headerShown: true,
-          ...headerStyleTransparent,
-          title: 'Sign in',
-        })}
-        name="LoginScreen"
-        component={LoginScreen}
-      />
-      <MainStack.Screen
-        options={({navigation, route}) => ({
-          headerShown: true,
-          ...headerStyleTransparent,
-          title: 'Verify OTP',
-          headerLeft: () => <HeaderLeft navigation={navigation} />,
-        })}
-        name="OtpScreen"
-        component={OtpScreen}
-      />
-      <MainStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Select City',
@@ -321,11 +302,17 @@ const MainStackNavigator: FC = () => {
         component={CustomerStackNavigator}
       />
       <MainStack.Screen
+        options={({ navigation, route }) => ({
+          headerShown: true,
+          ...headerStyleTransparent,
+          title: 'Sign Up',
+          headerLeft: () => <HeaderLeft navigation={navigation} />,
+        })}
         name="ChooseSignupScreen"
         component={ChooseSignupScreen}
       />
       <MainStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Register as Customer',
@@ -335,7 +322,7 @@ const MainStackNavigator: FC = () => {
         component={CustomerSignupScreen}
       />
       <MainStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Required Solar',
@@ -345,7 +332,7 @@ const MainStackNavigator: FC = () => {
         component={RequireSolarForm}
       />
       <MainStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Service & Cleaning',
@@ -355,7 +342,7 @@ const MainStackNavigator: FC = () => {
         component={MaintenenceForm}
       />
       <MainStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Solar Insurance',
@@ -365,7 +352,7 @@ const MainStackNavigator: FC = () => {
         component={SolarInsurance}
       />
       <MainStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Solar on EMI',
@@ -375,7 +362,7 @@ const MainStackNavigator: FC = () => {
         component={SolarEMI}
       />
       <MainStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Maintenence Video',
@@ -385,7 +372,7 @@ const MainStackNavigator: FC = () => {
         component={VideoListScreen}
       />
       <MainStack.Screen
-        options={({navigation, route}) => ({
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Join as a partner',

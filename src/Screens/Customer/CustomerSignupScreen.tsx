@@ -5,16 +5,16 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CommonInput from '../../Components/CommonInput';
 import CommonButton from '../../Components/CommonButton';
-import {useNavigation} from '@react-navigation/native';
-import {AppStyles} from '../../Theme/AppStyles';
-import {hp} from '../../Theme/Fonts';
-import {openDocPicker} from '../../Utils/CommonFunction';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles } from '../../Theme/AppStyles';
+import { hp } from '../../Theme/Fonts';
+import { openDocPicker } from '../../Utils/CommonFunction';
 import BillView from '../../Components/BillView';
 import DropdownElement from '../../Components/DropdownElement';
-import {cityStateData} from '../../Utils/Constants';
+import { cityStateData } from '../../Utils/Constants';
 
 type Props = {};
 
@@ -33,25 +33,28 @@ const CustomerSignupScreen = (props: Props) => {
 
   return (
     <View style={AppStyles.flex}>
-      <ScrollView style={AppStyles.containerWithPadding}>
+      <ScrollView style={AppStyles.container}>
         <CommonInput
           title={'Name'}
           value={data.name}
-          onChangeText={text => setData({...data, name: text})}
+          onChangeText={text => setData({ ...data, name: text })}
           placeholder={'Enter name'}
+          style={styles.input}
         />
         <CommonInput
           title={'Mobile Number'}
           value={data.mobile}
           keyboardType="number-pad"
-          onChangeText={text => setData({...data, mobile: text})}
+          onChangeText={text => setData({ ...data, mobile: text })}
           placeholder={'Enter Mobile Number'}
+          style={styles.input}
         />
         <CommonInput
           title={'Email'}
           value={data.email}
-          onChangeText={text => setData({...data, email: text})}
+          onChangeText={text => setData({ ...data, email: text })}
           placeholder={'Enter email'}
+          style={styles.input}
         />
         {/* <BillView
           title={'Latest Electricity Bill'}
@@ -62,8 +65,9 @@ const CustomerSignupScreen = (props: Props) => {
         <DropdownElement
           data={cityStateData}
           value={data.state}
-          setData={(text: any) => setData({...data, state: text})}
+          setData={(text: any) => setData({ ...data, state: text })}
           // multiSelect={true}
+          style={styles.input}
           placeholder={'Select state'}
           valueField={'state'}
           labelField={'state'}
@@ -78,7 +82,7 @@ const CustomerSignupScreen = (props: Props) => {
               : []
           }
           value={data.city}
-          setData={(text: any) => setData({...data, city: text})}
+          setData={(text: any) => setData({ ...data, city: text })}
           // multiSelect={true}
           placeholder={'Select city'}
           valueField={'city'}
@@ -86,18 +90,21 @@ const CustomerSignupScreen = (props: Props) => {
           title={'City'}
           isSearch={true}
           searchPlaceholder="Enter city to search..."
+          style={styles.input}
         />
         <CommonInput
           title={'Address'}
           value={data.address}
-          onChangeText={text => setData({...data, address: text})}
+          onChangeText={text => setData({ ...data, address: text })}
           placeholder={'Enter address'}
+          style={styles.input}
         />
         <CommonInput
           title={'Referral Code'}
           value={data.referralCode}
-          onChangeText={text => setData({...data, referralCode: text})}
+          onChangeText={text => setData({ ...data, referralCode: text })}
           placeholder={'Enter referral code'}
+          style={styles.input}
         />
         <CommonButton
           title="Register"
@@ -112,5 +119,11 @@ const CustomerSignupScreen = (props: Props) => {
 export default CustomerSignupScreen;
 
 const styles = StyleSheet.create({
-  btn: {marginBottom: hp(6)},
+  btn: {
+    marginBottom: hp(6),
+    marginHorizontal: hp(2)
+  },
+  input: {
+    marginHorizontal: hp(2)
+  }
 });

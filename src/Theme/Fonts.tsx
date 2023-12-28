@@ -1,16 +1,16 @@
 export function getFontType(fontWeight: number) {
   if (fontWeight == 600) {
-    return 'Roboto-Semibold';
+    return 'DMSans-SemiBold';
   } else if (fontWeight == 400) {
-    return 'Roboto-Regular';
+    return 'DMSans-Regular';
   } else if (fontWeight == 700) {
-    return 'Roboto-Bold';
+    return 'DMSans-Bold';
   } else if (fontWeight == 500) {
-    return 'Roboto-Medium';
+    return 'DMSans-Medium';
   } else if (fontWeight == 300) {
-    return 'Roboto-Light';
+    return 'DMSans-Light';
   } else {
-    return 'Roboto-Regular';
+    return 'DMSans-Regular';
   }
 }
 
@@ -21,19 +21,19 @@ export const commonFontStyle = (
 ) => {
   return {
     fontFamily: getFontType(fontWeight),
-    fontSize: actuatedNormalize(fontSize - 3),
+    fontSize: actuatedNormalize(fontSize - 1),
     color: color,
     includeFontPadding: false,
   };
 };
 
-import {Dimensions, Platform, PixelRatio} from 'react-native';
+import { Dimensions, Platform, PixelRatio } from 'react-native';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 
-export const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} =
+export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
   Dimensions.get('window');
 
 export const hp = (i: number) => {

@@ -1,8 +1,9 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
-import {color} from '../Theme/color';
-import {hp, commonFontStyle} from '../Theme/Fonts';
-import {Dropdown} from 'react-native-element-dropdown';
+import { color } from '../Theme/color';
+import { hp, commonFontStyle } from '../Theme/Fonts';
+import { Dropdown } from 'react-native-element-dropdown';
+import { AppStyles } from '../Theme/AppStyles';
 
 type Props = {
   setData: () => void;
@@ -32,24 +33,24 @@ const DropdownElement: React.FC<Props> = ({
   searchPlaceholder,
 }) => {
   return (
-    <View style={[styles.container, {...style}]}>
+    <View style={[styles.container, { ...style }]}>
       {title && <Text style={styles.title}>{title}</Text>}
       <Dropdown
-        style={[styles.input, style]}
+        style={[styles.input]}
         placeholderStyle={{
-          ...commonFontStyle(400, 18, 'rgba(0,0,0,0.3)'),
+          ...commonFontStyle(400, 12, 'rgba(0,0,0,0.3)'),
           textAlign: 'left',
         }}
         search={isSearch}
         data={data}
-        selectedTextStyle={{...commonFontStyle(400, 18, color.black)}}
-        iconColor={color.black}
+        selectedTextStyle={{ ...commonFontStyle(400, 12, color.titleTextInputDarkBlue) }}
+        iconColor={color.gray_2}
         labelField={labelField}
         valueField={valueField}
         maxHeight={250}
         placeholder={placeholder}
         searchPlaceholder={searchPlaceholder}
-        inputSearchStyle={{...commonFontStyle(400, 16, 'rgba(0,0,0,0.3)')}}
+        inputSearchStyle={{ ...commonFontStyle(400, 12, color.titleTextInputDarkBlue) }}
         value={value}
         onChange={item => {
           setData(item[valueField]);
@@ -72,24 +73,24 @@ export default DropdownElement;
 
 const styles = StyleSheet.create({
   title: {
-    ...commonFontStyle(400, 18, color.black),
+    ...commonFontStyle(700, 14, color.titleTextInputDarkBlue),
     marginBottom: 8,
   },
   input: {
-    borderWidth: 1,
-    borderColor: color.input_border,
-    height: hp(7),
+    height: 50,
     paddingHorizontal: hp(2),
-    borderRadius: 15,
+    borderRadius: 10,
     marginBottom: hp(3),
-    ...commonFontStyle(400, 18, color.black),
+    ...commonFontStyle(400, 12, color.titleTextInputDarkBlue),
+    backgroundColor: color.white,
+    ...AppStyles.shadowview,
   },
   container: {
-    backgroundColor: color.white,
+    // backgroundColor: color.white,
   },
   textItem: {
     paddingVertical: 10,
     paddingHorizontal: hp(2),
-    color: color.black,
+    ...commonFontStyle(400, 12, color.titleTextInputDarkBlue),
   },
 });

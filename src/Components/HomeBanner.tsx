@@ -7,31 +7,31 @@ import {
   Image,
   Modal,
 } from 'react-native';
-import React, {useState} from 'react';
-import {color} from '../Theme/color';
-import {hp, commonFontStyle} from '../Theme/Fonts';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
+import React, { useState } from 'react';
+import { color } from '../Theme/color';
+import { hp, commonFontStyle } from '../Theme/Fonts';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import ReactNativeModal from 'react-native-modal';
 import PagerView from 'react-native-pager-view';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 type Props = {};
 
-const HomeBanner: React.FC<Props> = ({}) => {
+const HomeBanner: React.FC<Props> = ({ }) => {
   const width = Dimensions.get('window').width - hp(6);
   const [index, setIndex] = useState(0);
-  const [imageZoomModal, setimageZoomModal] = useState(true);
+  const [imageZoomModal, setimageZoomModal] = useState(false);
   const imageArray = [0, 1, 2, 3, 4, 5];
 
   return (
-    <View style={{height: 160, alignSelf: 'center'}}>
+    <View style={{ height: 160, alignSelf: 'center' }}>
       <Carousel
         sliderWidth={width}
         itemWidth={width}
         height={160}
         data={imageArray}
         onSnapToItem={(index: any) => setIndex(index)}
-        renderItem={({}) => (
+        renderItem={({ }) => (
           <TouchableOpacity onPress={() => setimageZoomModal(true)}>
             <Image
               source={{
@@ -63,9 +63,9 @@ const HomeBanner: React.FC<Props> = ({}) => {
       </View>
       <ReactNativeModal
         isVisible={imageZoomModal}
-        style={{margin: 0}}
+        style={{ margin: 0 }}
         onBackButtonPress={() => setimageZoomModal(false)}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <ImageViewer
             enableSwipeDown={true}
             onSwipeDown={() => setimageZoomModal(false)}
@@ -122,5 +122,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
   },
-  pagerView: {flex: 1},
+  pagerView: { flex: 1 },
 });
