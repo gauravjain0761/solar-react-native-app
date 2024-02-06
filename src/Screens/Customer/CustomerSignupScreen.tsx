@@ -11,10 +11,15 @@ import CommonButton from '../../Components/CommonButton';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles } from '../../Theme/AppStyles';
 import { hp } from '../../Theme/Fonts';
-import { openDocPicker } from '../../Utils/CommonFunction';
+import { errorToast, openDocPicker, successToast } from '../../Utils/CommonFunction';
 import BillView from '../../Components/BillView';
 import DropdownElement from '../../Components/DropdownElement';
 import { cityStateData } from '../../Utils/Constants';
+import { emailCheck } from '../../Utils/validation';
+import { setAuthorization } from '../../Utils/apiGlobal';
+import { setAsyncToken, setAsyncUserInfo } from '../../Utils/asyncStorage';
+import { useAppDispatch } from '../../Redux/hooks';
+import { onCustomerSignUp } from '../../Services/AuthService';
 
 type Props = {};
 
@@ -30,6 +35,57 @@ const CustomerSignupScreen = (props: Props) => {
     // ebill: undefined,
   });
   const navigation = useNavigation();
+  const dispatch = useAppDispatch()
+
+  const onPressSignup = () => {
+    if (data?.name.trim().length === 0) {
+      errorToast('Please enter name');
+    } else if (!/^\d*$/.test(data.mobile) || data.mobile.length == 0) {
+      errorToast('Please enter valid mobile Number');
+    } else if (data?.email.trim().length === 0) {
+      errorToast('Please enter email address');
+    } else if (!emailCheck(data?.email.trim())) {
+      errorToast('Please enter valid email address');
+    } else if (data.state == '') {
+      errorToast('Please select state');
+    } else if (data.city == '') {
+      errorToast('Please select city');
+    } else if (data.address.trim() == '') {
+      errorToast('Please enter address');
+    } else {
+      const obj = {
+        data: {
+          name: data.name,
+          email: data.email,
+          mobile: data.mobile,
+          state: data.state,
+          city: data.city,
+          address: data.address,
+          referralCode: data.referralCode.trim() !== '' ? data.referralCode : ''
+        },
+        onSuccess: async (res: any) => {
+          setAsyncUserInfo(res?.data)
+          successToast('Signup successful')
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'LoginScreen' }]
+          })
+          setData({
+            name: '',
+            mobile: '',
+            email: '',
+            city: '',
+            state: '',
+            address: '',
+            referralCode: '',
+          });
+        },
+        onFailure: () => {
+        },
+      }
+      dispatch(onCustomerSignUp(obj))
+    }
+  }
 
   return (
     <View style={AppStyles.flex}>
@@ -108,7 +164,7 @@ const CustomerSignupScreen = (props: Props) => {
         />
         <CommonButton
           title="Register"
-          onPress={() => navigation.navigate('LoginScreen')}
+          onPress={() => onPressSignup()}
           style={styles.btn}
         />
       </ScrollView>

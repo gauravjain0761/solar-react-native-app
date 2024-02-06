@@ -14,5 +14,7 @@ export const color = {
   black_2: '#222222',
   navy_blue_1: '#130160',
   white: '#ffffff',
-  black: '#000000'
+  black: '#000000',
+  green_20CA60: '#20CA60',
+  red_ED7C7C: '#ED7C7C'
 };

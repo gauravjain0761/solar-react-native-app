@@ -96,12 +96,12 @@ const SelectCity = (props: Props) => {
         {isCitySelected && (
           <CommonButton
             title="Select"
-            onPress={() => navigation.navigate('CustomerDashboard')}
+            onPress={() => navigation.navigate('CustomerHome')}
             style={{ marginTop: 10, marginHorizontal: hp(2), }}
           />
         )}
         <TouchableOpacity
-          onPress={() => navigation.navigate('CustomerDashboard')}
+          onPress={() => navigation.navigate('CustomerHome')}
           style={styles.skipView}>
           <Text style={styles.skipText}>Skip</Text>
           <Image source={ARROWRIGHT} style={styles.arrowImage} />

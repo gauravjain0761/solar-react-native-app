@@ -7,6 +7,11 @@ import { hp, commonFontStyle } from '../Theme/Fonts';
 import CommonButton from '../Components/CommonButton';
 import { color } from '../Theme/color';
 import OTPTextInput from 'react-native-otp-textinput';
+import { errorToast } from '../Utils/CommonFunction';
+import { useAppDispatch } from '../Redux/hooks';
+import { onverifyVerificationCode } from '../Services/AuthService';
+import { setAuthorization } from '../Utils/apiGlobal';
+import { setAsyncToken, setAsyncUserInfo } from '../Utils/asyncStorage';
 
 type Props = {};
 
@@ -17,6 +22,30 @@ const OtpScreen = (props: Props) => {
   const [phoneNumber, setphoneNumber] = useState(
     props?.route?.params?.mobileNo,
   );
+  const dispatch = useAppDispatch()
+
+  const onPressVerify = () => {
+    // navigation.navigate('OtpScreen', { mobileNo: mobileNo })
+    if (otp.length < 4) {
+      errorToast('Please enter valid OTP');
+    } else {
+      let obj = {
+        data: {
+          mobile: phoneNumber,
+          verificationCode: otp
+        },
+        onSuccess: async (res: any) => {
+          console.log('res-----', res)
+          setAuthorization(res?.token)
+          await setAsyncToken(res?.token)
+          setAsyncUserInfo(res?.data)
+          navigation.navigate('SelectCity');
+          setotp('')
+        }
+      }
+      dispatch(onverifyVerificationCode(obj))
+    }
+  }
 
   return (
     <View style={[AppStyles.containerWithPadding, { justifyContent: 'space-between' }]}>
@@ -36,7 +65,7 @@ const OtpScreen = (props: Props) => {
         />
       </View>
       <View>
-        <CommonButton title="Verify" onPress={() => { navigation.navigate('SelectCity'); }} />
+        <CommonButton title="Verify" onPress={() => { onPressVerify() }} />
         <TouchableOpacity
           onPress={() => { }}
           style={styles.signupView}>

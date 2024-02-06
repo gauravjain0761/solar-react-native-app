@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../Screens/HomeScreen';
-import { NavigationContainer, useIsFocused } from '@react-navigation/native';
+import { NavigationContainer, createNavigationContainerRef, useIsFocused } from '@react-navigation/native';
 import { FC } from 'react';
 import LoginScreen from '../Screens/LoginScreen';
 import OtpScreen from '../Screens/OtpScreen';
@@ -40,6 +40,9 @@ import SolarEMI from '../Screens/Customer/SolarEMI';
 import VideoListScreen from '../Screens/Customer/VideoListScreen';
 import FAQScreen from '../Screens/FAQScreen';
 import FullScreenVideo from '../Screens/Customer/FullScreenVideo';
+import { useAppSelector } from '../Redux/hooks';
+import Loader from '../Components/Loader';
+import { removeAuthorization } from '../Utils/apiGlobal';
 
 type RootStackParamList = {
   LoginScreen: undefined;
@@ -122,6 +125,11 @@ let DrawerItemArray = [
 ];
 function CustomDrawerContent(props) {
   const isFocused = useIsFocused()
+
+  const onPressLogout = async () => {
+    await removeAuthorization()
+    props.navigation.navigate('LoginScreen')
+  }
   return (
     <View>
       {/* {isFocused == true && <StatusBar backgroundColor={'transparent'} translucent barStyle={'light-content'} />} */}
@@ -149,7 +157,7 @@ function CustomDrawerContent(props) {
         })}
       </ScrollView>
       <TouchableOpacity
-        onPress={() => props.navigation.navigate('LoginScreen')}
+        onPress={() => onPressLogout()}
         style={styles.drawerContent}>
         <Image
           style={[styles.drawerItemIcon]}
@@ -173,7 +181,6 @@ const CustomerStackNavigator: FC = () => {
           marginRight: 0,
         },
         drawerStyle: {},
-        drawerInactiveTintColor: color.starText,
         // drawerActiveTintColor: color.PRIMARY_GREEN,
       })}>
       <CustomerStack.Screen
@@ -278,7 +285,7 @@ const MainStackNavigator: FC = () => {
         component={SelectCity}
       />
       <MainStack.Screen
-        name="CustomerDashboard"
+        name="CustomerHome"
         component={CustomerStackNavigator}
       />
       <MainStack.Screen
@@ -371,11 +378,16 @@ const MainStackNavigator: FC = () => {
     </MainStack.Navigator>
   );
 };
+export const navigationRef = createNavigationContainerRef();
 
 const RootContainer: FC = () => {
+  const { preLoader, } = useAppSelector(state => state.common);
+  console.log(preLoader)
+
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <MainStackNavigator />
+      {preLoader == true && <Loader />}
     </NavigationContainer>
   );
 };
