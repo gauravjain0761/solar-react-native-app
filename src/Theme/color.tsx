@@ -1,49 +1,4 @@
 export const color = {
-  primary: '#0F2972',
-  white: '#FFFFFF',
-  red: '#D0021B',
-  primary_gray: '#979797',
-  primary_sky: '#5ef6f6',
-  gray: '#4A4A4A',
-  skyblue: '#1CF2F2',
-  black: '#000000',
-  light_green: '#cbeda6',
-  BORDER_COLOR: '#F2F1F1',
-  LIGHT_SKY: '#D3FCFC',
-  LIGHT_GRAY: '#fafafa',
-  PRIMARY_GREEN: '#222455',
-  PRIMARY_LIGHT_GREEN: '#87c500',
-  FONT_GREEN: '#134800',
-  FONT_DARK_VIOLET: '#3e3f68',
-  FONT_LIGHT_VIOLET: '#8a98ba',
-  FONT_MEDIUM_BLACK: '#222455',
-  BORDER_GREY: '#e8e8e8',
-  BORDER_3: '#bac0cb',
-  PLACEHOLDER_TEXT: '#6e7faa',
-  THEME_RED: '#ff3b30',
-  RED: '#FF4a40',
-
-  border_gray: '#707070',
-  input_border: 'rgba(115, 116, 118, 0.5)',
-  blue_opacity: 'rgba(32, 114, 209, 0.3)',
-  FONT_GREEN_50_OPACITY: 'rgba(19, 72, 0, 0.5)',
-  black_50: 'rgba(0, 0, 0, 0.5)',
-  black_30: 'rgba(0, 0, 0, 0.3)',
-  searchImageColor: '#b6bed4',
-  yellow: '#ffcc00',
-  startGray: '#737476',
-  starText: '#77788B',
-  FONT_GREEN_31_OPACITY: 'rgba(69, 169, 0, 0.31)',
-  borderBottomModal: 'rgba(138, 152, 186, 1)',
-  priceTextGray: '#6a6a6a',
-  summaryText: '#535353',
-  lineColor: 'rgba(112, 112, 112, 0.09)',
-  lineColorSlider: 'rgba(112, 112, 112, 0.9)',
-
-
-
-
-
   mainBgColor: '#f7f7f7',
   titleDarkBlue: '#0D0140',
   titleTextInputDarkBlue: "#150B3D",
@@ -56,5 +11,8 @@ export const color = {
   green: '#557D26',
   blackPrimary: '#333647',
   black_1: '#1E1E1E',
-  navy_blue_1: '#130160'
+  black_2: '#222222',
+  navy_blue_1: '#130160',
+  white: '#ffffff',
+  black: '#000000'
 };

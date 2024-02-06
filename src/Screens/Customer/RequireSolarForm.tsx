@@ -38,12 +38,13 @@ const RequireSolarForm = (props: Props) => {
   return (
     <View style={AppStyles.flex}>
       <StatusBar backgroundColor={color.mainBgColor} barStyle={'dark-content'} />
-      <ScrollView style={AppStyles.containerWithPadding}>
+      <ScrollView style={AppStyles.container}>
         <CommonInput
           title={'Name'}
           value={data.name}
           onChangeText={text => setData({ ...data, name: text })}
           placeholder={'Enter Name'}
+          style={styles.input}
         />
         <CommonInput
           title={'Mobile Number'}
@@ -51,12 +52,14 @@ const RequireSolarForm = (props: Props) => {
           keyboardType="number-pad"
           onChangeText={text => setData({ ...data, mobile: text })}
           placeholder={'Enter Mobile Number'}
+          style={styles.input}
         />
         <CommonInput
           title={'Email'}
           value={data.email}
           onChangeText={text => setData({ ...data, email: text })}
           placeholder={'Enter Email'}
+          style={styles.input}
         />
         <DropdownElement
           data={categoryData}
@@ -67,6 +70,7 @@ const RequireSolarForm = (props: Props) => {
           valueField={'value'}
           labelField={'name'}
           title={'Category'}
+          style={styles.input}
         />
         <DropdownElement
           data={cityStateData}
@@ -79,6 +83,7 @@ const RequireSolarForm = (props: Props) => {
           title={'State'}
           isSearch={true}
           searchPlaceholder="Enter state to search..."
+          style={styles.input}
         />
         <DropdownElement
           data={
@@ -95,18 +100,21 @@ const RequireSolarForm = (props: Props) => {
           title={'City'}
           isSearch={true}
           searchPlaceholder="Enter city to search..."
+          style={styles.input}
         />
         <CommonInput
           title={'Address'}
           value={data.address}
           onChangeText={text => setData({ ...data, address: text })}
           placeholder={'Enter Address'}
+          style={styles.input}
         />
         <BillView
           title={'Latest Electricity Bill'}
           placeholder={'Select Latest Electricity Bill'}
           value={data.ebill ? data.ebill : undefined}
           onChangeText={res => setData({ ...data, ebill: res })}
+          style={styles.input}
         />
         <CommonButton
           title="Submit"
@@ -121,5 +129,6 @@ const RequireSolarForm = (props: Props) => {
 export default RequireSolarForm;
 
 const styles = StyleSheet.create({
-  btn: { marginBottom: hp(6) },
+  btn: { marginBottom: hp(6), marginHorizontal: hp(2) },
+  input: { marginHorizontal: hp(2) }
 });

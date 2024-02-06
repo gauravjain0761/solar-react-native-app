@@ -1,6 +1,7 @@
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React from 'react';
 import Accordian from '../Components/Accordian';
+import { AppStyles } from '../Theme/AppStyles';
 
 type Props = {};
 
@@ -24,11 +25,11 @@ const FAQScreen = (props: Props) => {
     },
   ];
   return (
-    <View>
+    <ScrollView style={AppStyles.container}>
       {data.map((item, index) => {
         return <Accordian data={item} />;
       })}
-    </View>
+    </ScrollView>
   );
 };
 

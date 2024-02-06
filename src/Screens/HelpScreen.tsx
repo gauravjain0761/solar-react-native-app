@@ -1,13 +1,15 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import { AppState, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import {color} from '../Theme/color';
-import {hp, commonFontStyle} from '../Theme/Fonts';
+import { color } from '../Theme/color';
+import { hp, commonFontStyle } from '../Theme/Fonts';
+import { AppStyles } from '../Theme/AppStyles';
 
 type Props = {};
 
 const HelpScreen = (props: Props) => {
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={AppStyles.container}>
+      <StatusBar backgroundColor={color.mainBgColor} barStyle={'dark-content'} />
       <Text style={styles.textStyle}>
         Whenever I start a new blog post, like this one, I start with plenty of
         online research — but that's not where it ends. After Googling relevant
@@ -54,7 +56,7 @@ export default HelpScreen;
 const styles = StyleSheet.create({
   textStyle: {
     lineHeight: 24,
-    ...commonFontStyle(400, 16, color.black_50),
+    ...commonFontStyle(400, 14, color.gray_1),
     marginHorizontal: 20,
   },
 });

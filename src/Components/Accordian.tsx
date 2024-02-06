@@ -7,15 +7,16 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {color} from '../Theme/color';
-import {hp} from '../Theme/Fonts';
+import React, { useEffect, useState } from 'react';
+import { color } from '../Theme/color';
+import { hp, commonFontStyle } from '../Theme/Fonts';
+import { AppStyles } from '../Theme/AppStyles';
 
 type Props = {
   data: any;
 };
 
-const Accordian: React.FC<Props> = ({data}) => {
+const Accordian: React.FC<Props> = ({ data }) => {
   const [expandable, setexpandable] = useState(false);
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -37,7 +38,7 @@ const Accordian: React.FC<Props> = ({data}) => {
       <View style={styles.parentHr} />
       {expandable && (
         <View style={styles.child}>
-          <Text>{data.data}</Text>
+          <Text style={styles.desText}>{data.data}</Text>
         </View>
       )}
     </View>
@@ -48,9 +49,10 @@ export default Accordian;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: color.PRIMARY_GREEN,
+    ...commonFontStyle(700, 16, color.titleDarkBlue)
+  },
+  desText: {
+    ...commonFontStyle(400, 14, color.gray_2)
   },
   row: {
     flexDirection: 'row',
@@ -60,15 +62,10 @@ const styles = StyleSheet.create({
     paddingRight: 18,
     alignItems: 'center',
     backgroundColor: color.white,
-    shadowColor: color.black,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 2.65,
-    elevation: 10,
     marginTop: hp(2),
+    marginHorizontal: hp(2),
+    ...AppStyles.shadowview,
+    borderRadius: 10
   },
   parentHr: {
     height: 1,
@@ -78,5 +75,8 @@ const styles = StyleSheet.create({
   child: {
     backgroundColor: color.white,
     padding: 16,
+    marginHorizontal: hp(2),
+    borderRadius: 10,
+    ...AppStyles.shadowview,
   },
 });

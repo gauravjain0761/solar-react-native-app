@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../Screens/HomeScreen';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { FC } from 'react';
 import LoginScreen from '../Screens/LoginScreen';
 import OtpScreen from '../Screens/OtpScreen';
 import SelectCity from '../Screens/SelectCity';
-import { BACKBTN, BACK_ARROW } from '../Theme/Resources';
+import { BACKBTN, BACK_ARROW, CUSTOMER_SIGNUP } from '../Theme/Resources';
 import { AppStyles } from '../Theme/AppStyles';
 import {
   Image,
@@ -14,6 +14,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ImageBackground,
+  StatusBar
 } from 'react-native';
 import { color } from '../Theme/color';
 import { commonFontStyle, hp, wp } from '../Theme/Fonts';
@@ -21,7 +23,6 @@ import CustomerDashboard from '../Screens/Customer/CustomerDashboard';
 import ChooseSignupScreen from '../Screens/ChooseSignupScreen';
 import CustomerSignupScreen from '../Screens/Customer/CustomerSignupScreen';
 import CompanySignupScreen from '../Screens/Company/CompanySignupScreen';
-import CompanyDashboard from '../Screens/Company/CompanyDashboard';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -38,6 +39,7 @@ import SolarInsurance from '../Screens/Customer/SolarInsurance';
 import SolarEMI from '../Screens/Customer/SolarEMI';
 import VideoListScreen from '../Screens/Customer/VideoListScreen';
 import FAQScreen from '../Screens/FAQScreen';
+import FullScreenVideo from '../Screens/Customer/FullScreenVideo';
 
 type RootStackParamList = {
   LoginScreen: undefined;
@@ -47,13 +49,20 @@ type RootStackParamList = {
   CompanySignupScreen: undefined;
   CustomerSignupScreen: undefined;
   ChooseSignupScreen: undefined;
-  CompanyDashboard: undefined;
 };
 
 const HeaderLeft = ({ navigation }) => {
   return (
     <TouchableOpacity onPress={() => navigation.goBack()}>
       <Image source={BACKBTN} style={AppStyles.backArrow} />
+    </TouchableOpacity>
+  );
+};
+
+const HeaderLeftDrawerScreen = ({ navigation }) => {
+  return (
+    <TouchableOpacity onPress={() => navigation.goBack()}>
+      <Image source={BACKBTN} style={[AppStyles.backArrow, { marginRight: 0, marginLeft: hp(2) }]} />
     </TouchableOpacity>
   );
 };
@@ -72,65 +81,61 @@ const headerStyleTransparent = {
 let DrawerItemArray = [
   {
     label: 'Dashboard',
-    image: require('../assets/images/ic_home.png'),
+    image: require('../assets/cil_home.png'),
     screen: 'CustomerDashboard',
   },
   {
     label: 'Profile',
-    image: require('../assets/images/ic_user.png'),
+    image: require('../assets/iconoir_profile-circled.png'),
     screen: 'CustomerProfile',
   },
   {
     label: 'My Coupons',
-    image: require('../assets/images/promocode.png'),
+    image: require('../assets/streamline_discount-percent-coupon.png'),
     screen: 'MyCouponsScreen',
   },
   {
     label: 'Contact Us',
-    image: require('../assets/images/contact-mail.png'),
+    image: require('../assets/iconoir_notes.png'),
     screen: 'ContactUsScreen',
   },
   {
     label: 'About Us',
-    image: require('../assets/images/about.png'),
+    image: require('../assets/clarity_info-standard-line-1.png'),
     screen: 'AboutUsScreen',
   },
   {
     label: 'Help',
-    image: require('../assets/images/contactUs.png'),
+    image: require('../assets/iconoir_headset-help.png'),
     screen: 'HelpScreen',
   },
   {
     label: 'Rate & Review',
-    image: require('../assets/images/review.png'),
+    image: require('../assets/carbon_star-review.png'),
     screen: 'RateReviewScreen',
   },
   {
     label: 'FAQ',
-    image: require('../assets/images/about.png'),
+    image: require('../assets/clarity_info-standard-line-1.png'),
     screen: 'FAQScreen',
   },
 ];
 function CustomDrawerContent(props) {
+  const isFocused = useIsFocused()
   return (
-    <DrawerContentScrollView
-      style={{
-        marginLeft: 0,
-        marginRight: 0,
-        padding: 0,
-      }}
-      {...props}>
-      <View
-        style={{
-          marginVertical: 12,
-          alignItems: 'center',
-        }}>
-        <Image
-          style={[styles.logoIcon]}
-          source={require('../assets/images/ic_sorConnect.png')}
-        />
-        <Text style={styles.userName}>{'Sor Coonect'}</Text>
-      </View>
+    <View>
+      {/* {isFocused == true && <StatusBar backgroundColor={'transparent'} translucent barStyle={'light-content'} />} */}
+      <ImageBackground resizeMode='cover' source={require('../assets/headerBg.png')} style={styles.headerView}>
+        <View style={styles.headerRow}>
+          <TouchableOpacity>
+            <Image style={styles.imageProfile} source={CUSTOMER_SIGNUP} />
+          </TouchableOpacity>
+          <View style={styles.nameView}>
+            <Text style={styles.hiText}>Gaurav Jain</Text>
+            <Text style={styles.nameText}>gaurav@mail.com</Text>
+          </View>
+        </View>
+      </ImageBackground>
       <ScrollView style={{}}>
         {DrawerItemArray.map((item, index) => {
           return (
@@ -148,46 +153,13 @@ function CustomDrawerContent(props) {
         style={styles.drawerContent}>
         <Image
           style={[styles.drawerItemIcon]}
-          source={require('../assets/images/switch.png')}
+          source={require('../assets/logout.png')}
         />
         <Text style={styles.labelText}>{'Logout'}</Text>
       </TouchableOpacity>
-    </DrawerContentScrollView>
+    </View>
   );
 }
-
-const CompanyStack = createDrawerNavigator<RootStackParamList>();
-const CompanyStackNavigator: FC = () => {
-  return (
-    <CompanyStack.Navigator
-      initialRouteName="CompanyDashboard"
-      drawerContent={props => <CustomDrawerContent {...props} />}
-      screenOptions={({ navigation }) => ({
-        drawerItemStyle: {
-          borderRadius: 0,
-          marginLeft: 0,
-        },
-        drawerStyle: {},
-      })}>
-      <CompanyStack.Screen
-        options={({ navigation, route }) => ({
-          headerShown: true,
-          ...headerStyleTransparent,
-          title: 'Company Dashboard',
-          drawerIcon: ({ focused, size }) => (
-            <Image
-              source={require('../assets/images/ic_home.png')}
-              style={{ height: 30, width: 30 }}
-            />
-          ),
-          // headerLeft: () => <HeaderLeft navigation={navigation} />,
-        })}
-        name="CompanyDashboard"
-        component={CompanyDashboard}
-      />
-    </CompanyStack.Navigator>
-  );
-};
 
 const CustomerStack = createDrawerNavigator<RootStackParamList>();
 const CustomerStackNavigator: FC = () => {
@@ -216,6 +188,7 @@ const CustomerStackNavigator: FC = () => {
         options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
+          headerLeft: () => <HeaderLeftDrawerScreen navigation={navigation} />,
           title: 'Profile',
         })}
         name="CustomerProfile"
@@ -226,6 +199,7 @@ const CustomerStackNavigator: FC = () => {
           headerShown: true,
           ...headerStyleTransparent,
           title: 'My Coupons',
+          headerLeft: () => <HeaderLeftDrawerScreen navigation={navigation} />,
         })}
         name="MyCouponsScreen"
         component={MyCouponsScreen}
@@ -235,6 +209,7 @@ const CustomerStackNavigator: FC = () => {
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Contact Us',
+          headerLeft: () => <HeaderLeftDrawerScreen navigation={navigation} />,
         })}
         name="ContactUsScreen"
         component={ContactUsScreen}
@@ -244,6 +219,7 @@ const CustomerStackNavigator: FC = () => {
           headerShown: true,
           ...headerStyleTransparent,
           title: 'About Us',
+          headerLeft: () => <HeaderLeftDrawerScreen navigation={navigation} />,
         })}
         name="AboutUsScreen"
         component={AboutUsScreen}
@@ -253,6 +229,7 @@ const CustomerStackNavigator: FC = () => {
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Help',
+          headerLeft: () => <HeaderLeftDrawerScreen navigation={navigation} />,
         })}
         name="HelpScreen"
         component={HelpScreen}
@@ -262,6 +239,7 @@ const CustomerStackNavigator: FC = () => {
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Rate & Review',
+          headerLeft: () => <HeaderLeftDrawerScreen navigation={navigation} />,
         })}
         name="RateReviewScreen"
         component={RateReviewScreen}
@@ -271,10 +249,12 @@ const CustomerStackNavigator: FC = () => {
           headerShown: true,
           ...headerStyleTransparent,
           title: 'FAQ',
+          headerLeft: () => <HeaderLeftDrawerScreen navigation={navigation} />,
         })}
         name="FAQScreen"
         component={FAQScreen}
       />
+
     </CustomerStack.Navigator>
   );
 };
@@ -373,6 +353,13 @@ const MainStackNavigator: FC = () => {
       />
       <MainStack.Screen
         options={({ navigation, route }) => ({
+          headerShown: false,
+        })}
+        name="FullScreenVideo"
+        component={FullScreenVideo}
+      />
+      <MainStack.Screen
+        options={({ navigation, route }) => ({
           headerShown: true,
           ...headerStyleTransparent,
           title: 'Join as a partner',
@@ -380,11 +367,6 @@ const MainStackNavigator: FC = () => {
         })}
         name="CompanySignupScreen"
         component={CompanySignupScreen}
-      />
-
-      <MainStack.Screen
-        name="CompanyDashboard"
-        component={CompanyStackNavigator}
       />
     </MainStack.Navigator>
   );
@@ -411,11 +393,16 @@ const styles = StyleSheet.create({
     borderRadius: wp(30),
     marginTop: 10,
   },
+  headerView: {
+    backgroundColor: color.btnOrange,
+    height: 130,
+    paddingTop: StatusBar.currentHeight
+  },
   drawerContent: {
     marginVertical: hp(2),
     alignItems: 'center',
     flexDirection: 'row',
-    marginHorizontal: 12,
+    marginHorizontal: hp(2),
   },
   userName: {
     marginTop: hp(2),
@@ -423,6 +410,25 @@ const styles = StyleSheet.create({
   },
   labelText: {
     marginLeft: wp(4),
-    ...commonFontStyle(400, 18, color.black),
+    ...commonFontStyle(500, 14, color.black_2),
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  nameView: {
+    flex: 1,
+  },
+  hiText: {
+    ...commonFontStyle(700, 23, color.white)
+  },
+  nameText: {
+    ...commonFontStyle(500, 16, color.white)
+  },
+  imageProfile: {
+    backgroundColor: color.white,
+    height: 50, width: 50, resizeMode: 'center',
+    borderRadius: 50 / 2,
+    margin: hp(2)
+  }
 });

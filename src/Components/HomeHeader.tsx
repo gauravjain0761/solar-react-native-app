@@ -3,14 +3,16 @@ import React from 'react'
 import { color } from '../Theme/color'
 import { CUSTOMER_SIGNUP, MENU } from '../Theme/Resources'
 import { hp, commonFontStyle } from '../Theme/Fonts'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {}
 
 const HomeHeader = (props: Props) => {
+    const navigation = useNavigation()
     return (
         <ImageBackground resizeMode='cover' source={require('../assets/headerBg.png')} style={styles.headerView}>
             <View style={styles.headerViewRow}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.openDrawer()}>
                     <Image style={styles.imageMenu} source={MENU} />
                 </TouchableOpacity>
                 <View style={styles.nameView}>

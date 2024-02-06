@@ -8,23 +8,24 @@ import {
   Image,
   StatusBar,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppStyles } from '../../Theme/AppStyles';
 import HomeBanner from '../../Components/HomeBanner';
 import CommonButton from '../../Components/CommonButton';
 import { hp, commonFontStyle } from '../../Theme/Fonts';
 import { color } from '../../Theme/color';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import HomeHeader from '../../Components/HomeHeader';
 
 type Props = {};
 
 const CustomerDashboard = (props: Props) => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused()
 
   return (
     <View style={AppStyles.container}>
-      <StatusBar backgroundColor={'transparent'} translucent barStyle={'light-content'} />
+      {isFocused == true && <StatusBar backgroundColor={'transparent'} translucent barStyle={'light-content'} />}
       <HomeHeader />
       {/* <HomeBanner /> */}
       <ScrollView>

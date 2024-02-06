@@ -1,13 +1,15 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import {color} from '../Theme/color';
-import {hp, commonFontStyle} from '../Theme/Fonts';
+import { color } from '../Theme/color';
+import { hp, commonFontStyle } from '../Theme/Fonts';
+import { AppStyles } from '../Theme/AppStyles';
 
 type Props = {};
 
 const AboutUsScreen = (props: Props) => {
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={AppStyles.container}>
+      <StatusBar backgroundColor={color.mainBgColor} barStyle={'dark-content'} />
       <Text style={styles.textStyle}>
         To be the most admired and trusted brand for reliable solar solutions
         provider company with a thrust on reliable, competitive, sustainable
@@ -46,7 +48,7 @@ export default AboutUsScreen;
 const styles = StyleSheet.create({
   textStyle: {
     lineHeight: 24,
-    ...commonFontStyle(400, 16, color.black_50),
+    ...commonFontStyle(400, 14, color.gray_1),
     marginHorizontal: 20,
   },
 });

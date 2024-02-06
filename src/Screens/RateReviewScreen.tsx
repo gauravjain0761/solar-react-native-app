@@ -1,7 +1,7 @@
-import {Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
+import { Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
-import {wp, commonFontStyle, hp} from '../Theme/Fonts';
-import {color} from '../Theme/color';
+import { wp, commonFontStyle, hp, SCREEN_WIDTH } from '../Theme/Fonts';
+import { color } from '../Theme/color';
 import CommonButton from '../Components/CommonButton';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,9 +12,9 @@ const RateReviewScreen = (props: Props) => {
 
   const navigation = useNavigation();
 
-  const RateView=({item}:any)=>{
-    return <TouchableOpacity style={{marginRight:10}} onPress={()=>setSelect(item)}>
-      <Image source={require('../assets/images/star.png')} style={[styles.starIcon,{tintColor: item < select ? color.yellow : color.gray}]}/>
+  const RateView = ({ item }: any) => {
+    return <TouchableOpacity style={{ marginRight: 10 }} onPress={() => setSelect(item)}>
+      <Image source={require('../assets/images/star.png')} style={[styles.starIcon, { tintColor: item < select ? color.yellow : color.gray }]} />
     </TouchableOpacity>
   }
 
@@ -29,9 +29,9 @@ const RateReviewScreen = (props: Props) => {
         We work super hard to make glose better for you,and would love to know
         how would you rate our app?
       </Text>
-      <View style={{flexDirection:'row',alignItems:'center',marginVertical:15}}>
-        {[1,2,3,4,5].map((item,index)=>{
-          return <RateView item={index}/>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
+        {[1, 2, 3, 4, 5].map((item, index) => {
+          return <RateView item={index} />
         })}
       </View>
       <CommonButton
@@ -53,32 +53,33 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: color.mainBgColor
   },
   iconStyle: {
     width: wp(30),
     height: wp(30),
   },
   headerText: {
-    marginVertical:hp(2),
-    ...commonFontStyle(400, 24, color.black),
+    marginVertical: hp(2),
+    ...commonFontStyle(700, 22, color.titleDarkBlue),
   },
   headerSubText: {
-    textAlign:'center',
-    width:'70%',
-    ...commonFontStyle(400, 18, color.black_50),
+    textAlign: 'center',
+    width: '70%',
+    ...commonFontStyle(400, 14, color.gray_2),
   },
   noThankText: {
-    marginVertical:hp(2),
-    textAlign:'center',
-    ...commonFontStyle(400, 18, color.primary),
+    marginVertical: hp(2),
+    textAlign: 'center',
+    ...commonFontStyle(400, 16, color.gray_1),
   },
   btn: {
-    width: '50%',
-    marginTop:hp(2),
-    alignSelf: 'center',
+    marginTop: hp(2),
+    marginHorizontal: hp(2),
+    width: SCREEN_WIDTH - hp(4)
   },
-  starIcon:{
-    width:30,
-    height:30
+  starIcon: {
+    width: 30,
+    height: 30
   }
 });

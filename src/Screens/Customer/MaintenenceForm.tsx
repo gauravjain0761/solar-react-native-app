@@ -6,17 +6,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CommonInput from '../../Components/CommonInput';
 import CommonButton from '../../Components/CommonButton';
-import {useNavigation} from '@react-navigation/native';
-import {AppStyles} from '../../Theme/AppStyles';
-import {hp} from '../../Theme/Fonts';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles } from '../../Theme/AppStyles';
+import { hp } from '../../Theme/Fonts';
 import DocumentPicker from 'react-native-document-picker';
-import {openDocPicker} from '../../Utils/CommonFunction';
+import { openDocPicker } from '../../Utils/CommonFunction';
 import BillView from '../../Components/BillView';
 import DropdownElement from '../../Components/DropdownElement';
-import {categoryData, cityStateData} from '../../Utils/Constants';
+import { categoryData, cityStateData } from '../../Utils/Constants';
 
 type Props = {};
 
@@ -37,40 +37,44 @@ const MaintenenceForm = (props: Props) => {
 
   const onSelectBill = async () => {
     const res = await openDocPicker();
-    setData({...data, ebill: res});
+    setData({ ...data, ebill: res });
   };
 
   return (
     <View style={AppStyles.flex}>
-      <ScrollView style={AppStyles.containerWithPadding}>
+      <ScrollView style={AppStyles.container}>
         <CommonInput
           title={'Name'}
           value={data.name}
-          onChangeText={text => setData({...data, name: text})}
+          onChangeText={text => setData({ ...data, name: text })}
           placeholder={'Enter Name'}
+          style={styles.input}
         />
         <CommonInput
           title={'Mobile Number'}
           value={data.mobile}
           keyboardType="number-pad"
-          onChangeText={text => setData({...data, mobile: text})}
+          onChangeText={text => setData({ ...data, mobile: text })}
           placeholder={'Enter Mobile Number'}
+          style={styles.input}
         />
         <CommonInput
           title={'Email'}
           value={data.email}
-          onChangeText={text => setData({...data, email: text})}
+          onChangeText={text => setData({ ...data, email: text })}
           placeholder={'Enter Email'}
+          style={styles.input}
         />
         <DropdownElement
           data={[
-            {name: 'Cleaning', value: 'cleaning'},
-            {name: 'Any Fault', value: 'any_fault'},
+            { name: 'Cleaning', value: 'cleaning' },
+            { name: 'Any Fault', value: 'any_fault' },
           ]}
           value={data.reason}
-          setData={(text: any) => setData({...data, reason: text})}
+          setData={(text: any) => setData({ ...data, reason: text })}
           // multiSelect={true}
           placeholder={'Select reason'}
+          style={styles.input}
           valueField={'value'}
           labelField={'name'}
           title={'Maintenance Reason'}
@@ -78,9 +82,10 @@ const MaintenenceForm = (props: Props) => {
         <DropdownElement
           data={categoryData}
           value={data.category}
-          setData={(text: any) => setData({...data, category: text})}
+          setData={(text: any) => setData({ ...data, category: text })}
           // multiSelect={true}
           placeholder={'Select category'}
+          style={styles.input}
           valueField={'value'}
           labelField={'name'}
           title={'Category'}
@@ -88,15 +93,17 @@ const MaintenenceForm = (props: Props) => {
         <CommonInput
           title={'Solar Capacity'}
           value={data.solarCapacity}
-          onChangeText={text => setData({...data, solarCapacity: text})}
+          onChangeText={text => setData({ ...data, solarCapacity: text })}
           placeholder={'Enter solar capacity'}
+          style={styles.input}
         />
         <DropdownElement
           data={cityStateData}
           value={data.state}
-          setData={(text: any) => setData({...data, state: text})}
+          setData={(text: any) => setData({ ...data, state: text })}
           // multiSelect={true}
           placeholder={'Select state'}
+          style={styles.input}
           valueField={'state'}
           labelField={'state'}
           title={'State'}
@@ -110,7 +117,7 @@ const MaintenenceForm = (props: Props) => {
               : []
           }
           value={data.city}
-          setData={(text: any) => setData({...data, city: text})}
+          setData={(text: any) => setData({ ...data, city: text })}
           // multiSelect={true}
           placeholder={'Select city'}
           valueField={'city'}
@@ -118,19 +125,22 @@ const MaintenenceForm = (props: Props) => {
           title={'City'}
           isSearch={true}
           searchPlaceholder="Enter city to search..."
+          style={styles.input}
         />
         <CommonInput
           title={'Address'}
           value={data.address}
-          onChangeText={text => setData({...data, address: text})}
+          onChangeText={text => setData({ ...data, address: text })}
           placeholder={'Enter Address'}
+          style={styles.input}
         />
 
         <BillView
           title={'Latest Electricity Bill'}
           placeholder={'Select Latest Electricity Bill'}
           value={data.ebill ? data.ebill : undefined}
-          onChangeText={res => setData({...data, ebill: res})}
+          onChangeText={res => setData({ ...data, ebill: res })}
+          style={styles.input}
         />
         <CommonButton
           title="Submit"
@@ -145,5 +155,6 @@ const MaintenenceForm = (props: Props) => {
 export default MaintenenceForm;
 
 const styles = StyleSheet.create({
-  btn: {marginBottom: hp(6)},
+  btn: { marginBottom: hp(6), marginHorizontal: hp(2) },
+  input: { marginHorizontal: hp(2) }
 });

@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import React, {useState} from 'react';
-import {hp, wp, commonFontStyle} from '../Theme/Fonts';
-import {color} from '../Theme/color';
+import React, { useState } from 'react';
+import { hp, wp, commonFontStyle } from '../Theme/Fonts';
+import { color } from '../Theme/color';
 import CommonInput from '../Components/CommonInput';
 import CommonButton from '../Components/CommonButton';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles } from '../Theme/AppStyles';
 
 type Props = {};
 
@@ -47,11 +48,13 @@ const list = [
   },
 ];
 
-const ListIcon = ({item}: any) => {
+const ListIcon = ({ item }: any) => {
   return (
     <TouchableOpacity onPress={() => item.onPress()} style={styles.listStyle}>
       <Image source={item.image} style={styles.iconStyle} />
-      <Text style={styles.listText}>{item.label}</Text>
+      <View style={AppStyles.flex}>
+        <Text style={styles.listText}>{item.label}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -73,20 +76,20 @@ const ContactUsScreen = (props: Props) => {
         <CommonInput
           title={'Name'}
           value={data.name}
-          style={{marginTop: hp(3)}}
-          onChangeText={text => setData({...data, name: text})}
+          style={{ marginTop: hp(3) }}
+          onChangeText={text => setData({ ...data, name: text })}
           placeholder={'Enter Name'}
         />
         <CommonInput
           title={'Email'}
           value={data.email}
-          onChangeText={text => setData({...data, email: text})}
+          onChangeText={text => setData({ ...data, email: text })}
           placeholder={'Enter Email'}
         />
         <CommonInput
           title={'Message'}
           value={data.message}
-          onChangeText={text => setData({...data, message: text})}
+          onChangeText={text => setData({ ...data, message: text })}
           placeholder={'Enter Mobile Number'}
         />
         <CommonButton
@@ -105,13 +108,14 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     paddingHorizontal: wp(5),
+    backgroundColor: color.mainBgColor,
+    paddingTop: hp(2)
   },
   mainStyle: {
     backgroundColor: color.white,
     width: '100%',
-    height: hp(70),
     elevation: 5,
     paddingHorizontal: wp(4),
     borderRadius: 18,
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
   },
   listText: {
     marginLeft: wp(5),
-    ...commonFontStyle(400, 16, color.black),
+    ...commonFontStyle(500, 14, color.black),
   },
-  btn: {marginBottom: hp(6)},
+  btn: { marginBottom: hp(3) },
 });
