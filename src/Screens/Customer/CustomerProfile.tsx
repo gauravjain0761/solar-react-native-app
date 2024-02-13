@@ -6,6 +6,12 @@ import { AppStyles } from '../../Theme/AppStyles';
 import CommonButton from '../../Components/CommonButton';
 import { hp } from '../../Theme/Fonts';
 import { color } from '../../Theme/color';
+import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
+import { onGetUserData, onUpdateCustomerData } from '../../Services/AuthService';
+import ImageCropPicker from 'react-native-image-crop-picker';
+import ProfilePictureView from '../../Components/ProfilePictureView';
+import { errorToast, successToast } from '../../Utils/CommonFunction';
+import { emailCheck } from '../../Utils/validation';
 
 type Props = {};
 
@@ -18,14 +24,68 @@ const CustomerProfile = (props: Props) => {
     city: '',
     address: '',
     ebill: undefined,
+    image: undefined,
   });
   const navigation = useNavigation();
   const isFocused = useIsFocused()
+  const dispatch = useAppDispatch()
+  const { userId, userData } = useAppSelector(e => e.common)
+  useEffect(() => {
+    dispatch(onGetUserData({ userId: userId }))
+  }, [])
+  useEffect(() => {
+    setData({
+      ...data,
+      name: userData?.name,
+      email: userData?.email,
+      mobile: userData?.mobile
+    })
+  }, [userData])
+
+
+  const onPressSubmit = () => {
+    if (data?.name.trim().length === 0) {
+      errorToast('Please enter name');
+    } else if (data?.email.trim().length === 0) {
+      errorToast('Please enter email address');
+    } else if (!emailCheck(data?.email.trim())) {
+      errorToast('Please enter valid email address');
+    } else {
+      const formData = new FormData()
+
+      // formData.append('image', {
+      //   uri: data.ebill.sourceURL,
+      //   type: data.ebill.mime, // or photo.type image/jpg
+      //   name: data.ebill.name
+      // })
+      formData.append('name', data.name)
+      formData.append('email', data.email)
+      formData.append('mobile', data.mobile)
+      console.log('-----------', formData)
+      const obj = {
+        userId: userId,
+        data: formData,
+        onSuccess: async (res: any) => {
+          successToast('Profile updated')
+          // dispatch(onGetUserData({ userId: userId }))
+        },
+        onFailure: () => {
+        },
+      }
+      dispatch(onUpdateCustomerData(obj))
+    }
+  }
 
   return (
     <View style={AppStyles.flex}>
       <StatusBar backgroundColor={color.mainBgColor} barStyle={'dark-content'} />
       <ScrollView style={AppStyles.container}>
+        <ProfilePictureView
+          value={data.image ? data.image : undefined}
+          onChangeText={res => setData({ ...data, image: res })}
+          style={styles.input}
+        />
+
         <CommonInput
           title={'Name'}
           value={data.name}
@@ -40,6 +100,7 @@ const CustomerProfile = (props: Props) => {
           onChangeText={text => setData({ ...data, mobile: text })}
           placeholder={'Enter Mobile Number'}
           style={{ marginHorizontal: hp(2) }}
+          editable={false}
         />
         <CommonInput
           title={'Email'}
@@ -50,7 +111,7 @@ const CustomerProfile = (props: Props) => {
         />
         <CommonButton
           title="Submit"
-          onPress={() => navigation.goBack()}
+          onPress={() => onPressSubmit()}
           style={styles.btn}
         />
       </ScrollView>

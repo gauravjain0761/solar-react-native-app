@@ -16,6 +16,7 @@ type Props = {
   reference?: any;
   keyboardType?: any;
   maxLength?: number;
+  editable?: boolean
 };
 
 const CommonInput: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const CommonInput: React.FC<Props> = ({
   reference,
   keyboardType,
   maxLength,
+  editable = true
 }) => {
   return (
     <View style={[styles.container, { ...style }]}>
@@ -47,6 +49,7 @@ const CommonInput: React.FC<Props> = ({
         ref={reference ? reference : null}
         keyboardType={keyboardType ? keyboardType : 'default'}
         maxLength={maxLength}
+        editable={editable}
       />
     </View>
   );

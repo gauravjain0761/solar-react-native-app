@@ -25,7 +25,6 @@ const OtpScreen = (props: Props) => {
   const dispatch = useAppDispatch()
 
   const onPressVerify = () => {
-    // navigation.navigate('OtpScreen', { mobileNo: mobileNo })
     if (otp.length < 4) {
       errorToast('Please enter valid OTP');
     } else {
@@ -35,12 +34,16 @@ const OtpScreen = (props: Props) => {
           verificationCode: otp
         },
         onSuccess: async (res: any) => {
-          console.log('res-----', res)
           setAuthorization(res?.token)
           await setAsyncToken(res?.token)
           setAsyncUserInfo(res?.data)
-          navigation.navigate('SelectCity');
           setotp('')
+          // navigation.navigate('SelectCity');
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'CustomerHome' }]
+          })
+          // navigation.navigate('CustomerHome')
         }
       }
       dispatch(onverifyVerificationCode(obj))

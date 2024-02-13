@@ -20,6 +20,7 @@ import { setAuthorization } from '../../Utils/apiGlobal';
 import { setAsyncToken, setAsyncUserInfo } from '../../Utils/asyncStorage';
 import { useAppDispatch } from '../../Redux/hooks';
 import { onCustomerSignUp } from '../../Services/AuthService';
+import ProfilePictureView from '../../Components/ProfilePictureView';
 
 type Props = {};
 
@@ -32,6 +33,7 @@ const CustomerSignupScreen = (props: Props) => {
     state: '',
     address: '',
     referralCode: '',
+    image: undefined
     // ebill: undefined,
   });
   const navigation = useNavigation();
@@ -52,17 +54,29 @@ const CustomerSignupScreen = (props: Props) => {
       errorToast('Please select city');
     } else if (data.address.trim() == '') {
       errorToast('Please enter address');
-    } else {
+    }
+    // else if (data.image==undefined) {
+    //   errorToast('Please select image');
+    // }
+    else {
+      const formData = new FormData()
+
+      // formData.append('image', {
+      //   uri: data.ebill.sourceURL,
+      //   type: data.ebill.mime, // or photo.type image/jpg
+      //   name: data.ebill.name
+      // })
+      formData.append('name', data.name)
+      formData.append('email', data.email)
+      formData.append('mobile', data.mobile)
+      formData.append('state', data.state)
+      formData.append('city', data.city)
+      formData.append('address', data.address)
+      formData.append('referralCode', data.referralCode.trim() !== '' ? data.referralCode : '',)
+
+
       const obj = {
-        data: {
-          name: data.name,
-          email: data.email,
-          mobile: data.mobile,
-          state: data.state,
-          city: data.city,
-          address: data.address,
-          referralCode: data.referralCode.trim() !== '' ? data.referralCode : ''
-        },
+        data: formData,
         onSuccess: async (res: any) => {
           setAsyncUserInfo(res?.data)
           successToast('Signup successful')
@@ -78,6 +92,7 @@ const CustomerSignupScreen = (props: Props) => {
             state: '',
             address: '',
             referralCode: '',
+            image: undefined
           });
         },
         onFailure: () => {
@@ -90,6 +105,11 @@ const CustomerSignupScreen = (props: Props) => {
   return (
     <View style={AppStyles.flex}>
       <ScrollView style={AppStyles.container}>
+        <ProfilePictureView
+          value={data.image ? data.image : undefined}
+          onChangeText={res => setData({ ...data, image: res })}
+          style={styles.input}
+        />
         <CommonInput
           title={'Name'}
           value={data.name}

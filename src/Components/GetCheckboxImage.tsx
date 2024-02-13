@@ -1,19 +1,19 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
-import {color} from '../Theme/color';
-import {hp, commonFontStyle} from '../Theme/Fonts';
-import {CHECK} from '../Theme/Resources';
+import { color } from '../Theme/color';
+import { hp, commonFontStyle } from '../Theme/Fonts';
+import { CHECK } from '../Theme/Resources';
 
 type Props = {
   value: boolean;
 };
 
-const GetCheckboxImage: React.FC<Props> = ({value}) => {
+const GetCheckboxImage: React.FC<Props> = ({ value }) => {
   return (
     <View>
       {value == true ? (
         <View
-          style={[styles.checkView, {backgroundColor: color.PRIMARY_GREEN}]}>
+          style={[styles.checkView, { backgroundColor: color.navy_blue_1 }]}>
           <Image source={CHECK} style={styles.checkBox} />
         </View>
       ) : (
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   checkView: {
     height: hp(2.3),
     width: hp(2.3),
-    borderColor: color.black,
+    borderColor: color.navy_blue_1,
     borderWidth: 1,
     borderRadius: 3,
     alignItems: 'center',

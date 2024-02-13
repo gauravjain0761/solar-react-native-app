@@ -1,28 +1,34 @@
-import { StatusBar, StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity } from 'react-native'
+import { StatusBar, StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, SafeAreaView, Platform } from 'react-native'
 import React from 'react'
 import { color } from '../Theme/color'
 import { CUSTOMER_SIGNUP, MENU } from '../Theme/Resources'
 import { hp, commonFontStyle } from '../Theme/Fonts'
 import { useNavigation } from '@react-navigation/native'
+import { useAppSelector } from '../Redux/hooks'
 
 type Props = {}
 
 const HomeHeader = (props: Props) => {
     const navigation = useNavigation()
+    const { userId, userData } = useAppSelector(e => e.common)
+
     return (
         <ImageBackground resizeMode='cover' source={require('../assets/headerBg.png')} style={styles.headerView}>
-            <View style={styles.headerViewRow}>
-                <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                    <Image style={styles.imageMenu} source={MENU} />
-                </TouchableOpacity>
-                <View style={styles.nameView}>
-                    <Text style={styles.hiText}>Hi</Text>
-                    <Text style={styles.nameText}>Gaurav</Text>
+            <SafeAreaView>
+                <View style={styles.headerViewRow}>
+                    <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                        <Image style={styles.imageMenu} source={MENU} />
+                    </TouchableOpacity>
+                    <View style={styles.nameView}>
+                        <Text style={styles.hiText}>Hi</Text>
+                        <Text style={styles.nameText}>{userData?.name}</Text>
+                    </View>
+                    <TouchableOpacity>
+                        <Image style={styles.imageProfile} source={CUSTOMER_SIGNUP} />
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity>
-                    <Image style={styles.imageProfile} source={CUSTOMER_SIGNUP} />
-                </TouchableOpacity>
-            </View>
+            </SafeAreaView>
+
         </ImageBackground>
     )
 }
@@ -32,7 +38,7 @@ export default HomeHeader
 const styles = StyleSheet.create({
     headerView: {
         backgroundColor: color.btnOrange,
-        height: 130,
+        height: Platform.OS == 'ios' ? 130 + 48 : 130,
         borderBottomEndRadius: 30,
         borderBottomStartRadius: 30,
         paddingTop: StatusBar.currentHeight

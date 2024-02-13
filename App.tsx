@@ -1,4 +1,4 @@
-import { LogBox, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { LogBox, SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect } from 'react';
 import RootContainer from './src/Navigation/Navigation';
 import SplashScreen from 'react-native-splash-screen';
@@ -18,16 +18,20 @@ const App = (props: Props) => {
   const toastConfig = {
     success: ({ text1, text2, type, props, ...rest }: any) =>
       type === 'success' && (
-        <View style={styles.textStyleToastSuccess}>
-          <Text style={styles.textStyleToast}>{text1}</Text>
-        </View>
+        <SafeAreaView>
+          <View style={styles.textStyleToastSuccess}>
+            <Text style={styles.textStyleToast}>{text1}</Text>
+          </View>
+        </SafeAreaView>
       ),
     error: ({ text1, text2, type, props, ...rest }: any) => {
       if (type === 'error') {
         return (
-          <View style={styles.toastStyle}>
-            <Text style={styles.textStyleToast}>{text1}</Text>
-          </View>
+          <SafeAreaView>
+            <View style={styles.toastStyle}>
+              <Text style={styles.textStyleToast}>{text1}</Text>
+            </View>
+          </SafeAreaView>
         );
       }
     },

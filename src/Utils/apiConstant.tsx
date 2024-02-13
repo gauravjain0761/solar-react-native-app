@@ -9,9 +9,12 @@ export const api = {
     customerSignUp: "/customer/customerSignUp",
     sendVerificationCode: '/customer/sendVerificationCode',
     verifyVerificationCode: '/customer/verifyVerificationCode',
-    forgetpassword: "user/send-restPassword-mail",
-    referralCode: 'user/add-referral-code',
-    checkUserSignupStatus: 'user/check-user-signUp-status',
+    getUserData: '/customer/getData',
+    updateCustomerData: '/customer/updateCustomerData',
+
+
+    addSolarEnquiry: '/solarEnquiry/addSolarEnquiry',
+    addMaintenanceEnquiry: '/maintenanceEnquiry/addMaintenanceEnquiry'
 
 }
 

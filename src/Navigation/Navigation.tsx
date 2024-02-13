@@ -15,7 +15,9 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
-  StatusBar
+  StatusBar,
+  Platform,
+  SafeAreaView
 } from 'react-native';
 import { color } from '../Theme/color';
 import { commonFontStyle, hp, wp } from '../Theme/Fonts';
@@ -107,11 +109,11 @@ let DrawerItemArray = [
     image: require('../assets/clarity_info-standard-line-1.png'),
     screen: 'AboutUsScreen',
   },
-  {
-    label: 'Help',
-    image: require('../assets/iconoir_headset-help.png'),
-    screen: 'HelpScreen',
-  },
+  // {
+  //   label: 'Help',
+  //   image: require('../assets/iconoir_headset-help.png'),
+  //   screen: 'HelpScreen',
+  // },
   {
     label: 'Rate & Review',
     image: require('../assets/carbon_star-review.png'),
@@ -125,24 +127,31 @@ let DrawerItemArray = [
 ];
 function CustomDrawerContent(props) {
   const isFocused = useIsFocused()
+  const { userId, userData } = useAppSelector(e => e.common)
 
   const onPressLogout = async () => {
     await removeAuthorization()
-    props.navigation.navigate('LoginScreen')
+    props.navigation.closeDrawer()
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: 'LoginScreen' }]
+    })
   }
   return (
     <View>
       {/* {isFocused == true && <StatusBar backgroundColor={'transparent'} translucent barStyle={'light-content'} />} */}
       <ImageBackground resizeMode='cover' source={require('../assets/headerBg.png')} style={styles.headerView}>
-        <View style={styles.headerRow}>
-          <TouchableOpacity>
-            <Image style={styles.imageProfile} source={CUSTOMER_SIGNUP} />
-          </TouchableOpacity>
-          <View style={styles.nameView}>
-            <Text style={styles.hiText}>Gaurav Jain</Text>
-            <Text style={styles.nameText}>gaurav@mail.com</Text>
+        <SafeAreaView>
+          <View style={styles.headerRow}>
+            <TouchableOpacity>
+              <Image style={styles.imageProfile} source={CUSTOMER_SIGNUP} />
+            </TouchableOpacity>
+            <View style={styles.nameView}>
+              <Text style={styles.hiText}>{userData?.name}</Text>
+              <Text style={styles.nameText}>{userData?.email}</Text>
+            </View>
           </View>
-        </View>
+        </SafeAreaView>
       </ImageBackground>
       <ScrollView style={{}}>
         {DrawerItemArray.map((item, index) => {
@@ -407,7 +416,7 @@ const styles = StyleSheet.create({
   },
   headerView: {
     backgroundColor: color.btnOrange,
-    height: 130,
+    height: Platform.OS == 'ios' ? 130 + 48 : 130,
     paddingTop: StatusBar.currentHeight
   },
   drawerContent: {

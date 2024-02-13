@@ -13,10 +13,13 @@ import { useNavigation } from '@react-navigation/native';
 import { AppStyles } from '../../Theme/AppStyles';
 import { hp } from '../../Theme/Fonts';
 import DocumentPicker from 'react-native-document-picker';
-import { openDocPicker } from '../../Utils/CommonFunction';
+import { errorToast, openDocPicker, successToast } from '../../Utils/CommonFunction';
 import BillView from '../../Components/BillView';
 import DropdownElement from '../../Components/DropdownElement';
 import { categoryData, cityStateData } from '../../Utils/Constants';
+import { emailCheck } from '../../Utils/validation';
+import { useAppDispatch } from '../../Redux/hooks';
+import { onAddMaintenanceEnquiry } from '../../Services/CustomerService';
 
 type Props = {};
 
@@ -34,15 +37,64 @@ const MaintenenceForm = (props: Props) => {
     category: '',
   });
   const navigation = useNavigation();
+  const dispatch = useAppDispatch()
 
-  const onSelectBill = async () => {
-    const res = await openDocPicker();
-    setData({ ...data, ebill: res });
-  };
+  const onPressSubmit = () => {
+    if (data?.name.trim().length === 0) {
+      errorToast('Please enter name');
+    } else if (!/^\d*$/.test(data.mobile) || data.mobile.length == 0) {
+      errorToast('Please enter valid mobile Number');
+    } else if (data?.email.trim().length === 0) {
+      errorToast('Please enter email address');
+    } else if (!emailCheck(data?.email.trim())) {
+      errorToast('Please enter valid email address');
+    } else if (data.reason == '') {
+      errorToast('Please select maintenance reason');
+    } else if (data.category == '') {
+      errorToast('Please select category');
+    } else if (data.category == '') {
+      errorToast('Please enter solar capacity');
+    } else if (data.state == '') {
+      errorToast('Please select state');
+    } else if (data.city == '') {
+      errorToast('Please select city');
+    } else if (data.address.trim() == '') {
+      errorToast('Please enter address');
+    }
+    // else if (data.ebill == undefined) {
+    //   errorToast('Please select latest electricity bill');
+    // }
+    else {
+      let formData = new FormData()
+      // formData.append('image', {
+      //   uri: data.ebill.sourceURL,
+      //   type: data.ebill.mime, // or photo.type image/jpg
+      //   name: data.ebill.name
+      // })
+      formData.append('name', data.name)
+      formData.append('email', data.email)
+      formData.append('mobile', data.mobile)
+      formData.append('category', data.category)
+      formData.append('state', data.state)
+      formData.append('city', data.city)
+      formData.append('address', data.address)
+      formData.append('maintenanceReason', data.reason)
+      formData.append('solarCapacity', data.solarCapacity)
+      const obj = {
+        data: formData,
+        onSuccess: (res: any) => {
+          console.log(res)
+          successToast('Service and cleaning request created successfully')
+          navigation.goBack()
+        }
+      }
+      dispatch(onAddMaintenanceEnquiry(obj))
+    }
+  }
 
   return (
     <View style={AppStyles.flex}>
-      <ScrollView style={AppStyles.container}>
+      <ScrollView style={[AppStyles.container, AppStyles.paddingVerticalView]}>
         <CommonInput
           title={'Name'}
           value={data.name}
@@ -144,7 +196,7 @@ const MaintenenceForm = (props: Props) => {
         />
         <CommonButton
           title="Submit"
-          onPress={() => navigation.goBack()}
+          onPress={() => onPressSubmit()}
           style={styles.btn}
         />
       </ScrollView>

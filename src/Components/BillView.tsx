@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -46,27 +47,35 @@ const BillView: React.FC<Props> = ({
     },
   ];
   const openPicker = () => {
-    closeActionSheet();
     ImageCropPicker.openCamera({
       mediaType: 'photo',
     }).then(image => {
+      closeActionSheet();
       console.log(image);
-      let temp = {
-        ...image,
-        name: 'image_' + new Date().getTime() + '.png',
-      };
+      if (Platform.OS == "android") {
+        image.sourceURL = image.path;
+      } else {
+        if (image.sourceURL == null) {
+          image.sourceURL = image.path;
+        }
+      }
+      let temp = { ...image, name: 'image_' + new Date().getTime() + '.png', };
       onChangeText(temp);
     });
   };
   const openGallery = () => {
-    closeActionSheet();
     ImageCropPicker.openPicker({
       mediaType: 'photo',
     }).then(image => {
-      let temp = {
-        ...image,
-        name: image.path.split('/').pop(),
-      };
+      closeActionSheet()
+      if (Platform.OS == "android") {
+        image.sourceURL = image.path;
+      } else {
+        if (image.sourceURL == null) {
+          image.sourceURL = image.path;
+        }
+      }
+      let temp = { ...image, name: image.path.split('/').pop(), };
       onChangeText(temp);
     });
   };
